@@ -1,0 +1,20 @@
+{
+  "name": "wondershare-media-io",
+  "interface": {
+    "displayName": "Wondershare Media.io"
+  },
+  "plugins": [
+    {
+      "name": "media-io",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    }
+  ]
+}

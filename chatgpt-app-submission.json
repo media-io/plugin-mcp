@@ -1,0 +1,248 @@
+{
+  "$schema": "https://developers.openai.com/apps-sdk/schemas/chatgpt-app-submission.v1.json",
+  "schema_version": 1,
+  "app_info": {
+    "display_name": "Media.io",
+    "subtitle": "Create images and videos",
+    "description": "Media.io helps users discover generation capabilities, inspect account credits, upload source media, submit image and video jobs, monitor task status, and retrieve generated assets through ChatGPT.",
+    "category": "DESIGN"
+  },
+  "tools": {
+    "get_account": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves the authorized user's Media.io account, membership, credit balance, and account links without changing them.",
+        "open_world_justification": "It only reads the user's private account and cannot publish content or change external state.",
+        "destructive_justification": "It does not delete, overwrite, revoke, charge, or otherwise perform an irreversible action."
+      }
+    },
+    "get_account_card": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves the authorized user's Media.io account, membership, and credit balance and displays them in a card without changing them.",
+        "open_world_justification": "It only reads private account data for the card and cannot publish content or change external state.",
+        "destructive_justification": "It does not delete, overwrite, revoke, charge, or otherwise perform an irreversible action."
+      }
+    },
+    "get_upgrade_options_card": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only reads the current account and calculates any displayed credit shortfall; it cannot charge the user or change a plan.",
+        "open_world_justification": "It displays a purchase link for the private account without opening it or changing any external state.",
+        "destructive_justification": "It only displays plan and credit options and cannot purchase, overwrite, revoke, or delete anything."
+      }
+    },
+    "list_capabilities": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only lists generation capabilities and pagination data available to the authorized subject.",
+        "open_world_justification": "It only reads the capability catalog and cannot publish content or change external state.",
+        "destructive_justification": "It does not create, update, delete, charge, or publish any resource."
+      }
+    },
+    "describe_capability": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only retrieves parameter definitions and defaults for the requested capabilities.",
+        "open_world_justification": "It only reads capability metadata and cannot submit a task or change external state.",
+        "destructive_justification": "It cannot create, update, delete, charge, or publish anything."
+      }
+    },
+    "get_generation": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only looks up the authorized user's generation task status and output metadata by task ID, holding the call open until the tasks finish.",
+        "open_world_justification": "It only reads private task results and cannot publish content or change external state.",
+        "destructive_justification": "It does not cancel, delete, overwrite, or resubmit any generation task."
+      }
+    },
+    "get_generation_card": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only looks up finished generation tasks by task ID and displays their results in a card.",
+        "open_world_justification": "It only displays private task results and cannot publish content or change external state.",
+        "destructive_justification": "It does not cancel, delete, overwrite, or resubmit any generation task."
+      }
+    },
+    "list_generations": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only lists the authorized user's past generation tasks and pagination data.",
+        "open_world_justification": "It only reads private task history and cannot publish content or change external state.",
+        "destructive_justification": "It does not create, cancel, delete, overwrite, charge, or publish a task."
+      }
+    },
+    "list_assets": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only lists media assets and metadata in the authorized user's private Media.io drive.",
+        "open_world_justification": "It only reads private drive metadata and cannot publish content or change external state.",
+        "destructive_justification": "It cannot upload, overwrite, move, delete, or publish drive assets."
+      }
+    },
+    "estimate_generation": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only calculates the current credit estimate for supplied generation parameters and does not reserve credits or create a task.",
+        "open_world_justification": "It only calculates a price and cannot submit work or change external state.",
+        "destructive_justification": "It does not submit work, charge credits, delete data, or change a plan."
+      }
+    },
+    "create_generation": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "It submits a generation task and consumes credits, so it changes the user's remote Media.io account state.",
+        "open_world_justification": "It creates a generation task in the external Media.io cloud service and starts remote processing.",
+        "destructive_justification": "It may consume credits to create a private task but does not delete, overwrite, revoke access, or publish existing content."
+      }
+    },
+    "create_upload": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "It creates an upload ticket and may reserve a new file registration in the user's Media.io drive, so it is not strictly read-only.",
+        "open_world_justification": "It communicates with the external Media.io drive and returns a presigned URL for the caller to upload bytes.",
+        "destructive_justification": "It does not delete or overwrite existing drive assets; repeated content is handled through the service's deduplication path."
+      }
+    },
+    "complete_upload": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "It verifies uploaded bytes and registers the resulting file in the user's Media.io drive, which changes remote state.",
+        "open_world_justification": "It completes an upload with the external Media.io drive and returns the generation-ready file identifier.",
+        "destructive_justification": "It is idempotent and registers the uploaded file without deleting or overwriting another asset."
+      }
+    },
+    "render_probe": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only renders a static compatibility component and returns probe metadata without reading or changing business data.",
+        "open_world_justification": "The probe uses no external network resources and does not change public or third-party state.",
+        "destructive_justification": "It performs no account, media, task, upload, payment, or file operation."
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "description": "Inspect account status and display the official options for adding credits.",
+      "user_prompt": "Show my Media.io membership and credit balance, then show the official options for adding credits.",
+      "file_attachment_urls": null,
+      "tools_triggered": "get_account_card, get_upgrade_options_card",
+      "expected_output": "Displays the private account details and official upgrade entry without attempting a purchase.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Discover a suitable capability and inspect its parameter definitions.",
+      "user_prompt": "Find a current text-to-image capability in Media.io and show its required parameters and defaults.",
+      "file_attachment_urls": null,
+      "tools_triggered": "list_capabilities, describe_capability",
+      "expected_output": "Returns matching capability codes and their parameter definitions without guessing or submitting a task.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Prepare a private drive upload and wait for the client to transfer the file bytes.",
+      "user_prompt": "Prepare an upload to my Media.io drive for a one-byte file named source.txt containing the letter a. Give me the upload instructions; do not complete it until the bytes are stored.",
+      "file_attachment_urls": null,
+      "tools_triggered": "create_upload",
+      "expected_output": "Returns a private upload ticket and required transfer instructions, without claiming that the file is already registered.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Estimate, submit, and show the result of one approved image generation.",
+      "user_prompt": "Create one Media.io image of a red paper lantern on a white background. Show the credit estimate first; I approve that quoted amount. Submit once and show the finished image.",
+      "file_attachment_urls": null,
+      "tools_triggered": "list_capabilities, describe_capability, estimate_generation, create_generation, get_generation, get_generation_card",
+      "expected_output": "Shows the credit estimate, submits one task with the approved amount, waits for completion, and displays the result.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Review recent tasks and private drive assets for reuse in a new generation.",
+      "user_prompt": "Show my recent Media.io generation tasks and list the media files in my drive that I can reuse as inputs.",
+      "file_attachment_urls": null,
+      "tools_triggered": "list_generations, list_assets",
+      "expected_output": "Returns recent task statuses and private drive assets with file identifiers suitable for a later generation.",
+      "expected_output_url": null
+    }
+  ],
+  "negative_test_cases": [
+    {
+      "description": "Do not invoke the app for unrelated productivity requests.",
+      "user_prompt": "What meetings do I have tomorrow and where are they?",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app should not be invoked because calendar lookup is outside the Media.io generation and asset workflows.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not claim to support cancellation or deletion when no such tool is exposed.",
+      "user_prompt": "Cancel and permanently delete my last Media.io generation task.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app should not trigger a nonexistent cancellation or deletion operation; explain that the exposed tools do not provide that action.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not collect payment credentials or perform a purchase transaction.",
+      "user_prompt": "Buy credits for me and enter my card number to complete the payment.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app should not invoke a payment action or solicit card details because it only displays the official upgrade entry and cannot complete purchases.",
+      "expected_output_url": null
+    }
+  ]
+}

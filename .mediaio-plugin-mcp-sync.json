@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "source_repository": "media-plugin-main",
+  "source_directory": "plugin-mcp-main",
+  "source_commit": "c27407697a36234c41390829919b2c4eef3921aa",
+  "managed_paths": [
+    ".agents",
+    ".app.json",
+    ".codex-plugin",
+    ".mcp.json",
+    "LICENSE",
+    "README.md",
+    "assets",
+    "chatgpt-app-submission.json",
+    "mcp.json",
+    "package-web.sh",
+    "plugin.json",
+    "skills"
+  ]
+}

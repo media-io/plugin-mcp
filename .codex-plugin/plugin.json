@@ -1,0 +1,45 @@
+{
+  "name": "media-io",
+  "version": "1.0.0",
+  "description": "Media.io cloud generation workflows through the hosted Media.io MCP server.",
+  "author": {
+    "name": "Media.io",
+    "email": "mi_dev@300624.cn",
+    "url": "https://www.media.io"
+  },
+  "homepage": "https://www.media.io/ai/home",
+  "repository": "https://github.com/media-io/plugin-mcp",
+  "license": "MIT",
+  "keywords": [
+    "media.io",
+    "image-generation",
+    "video-generation",
+    "codex",
+    "mcp"
+  ],
+  "mcpServers": "./.mcp.json",
+  "apps": "./.app.json",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Media.io",
+    "shortDescription": "Create images and videos with Media.io",
+    "longDescription": "Generate images and videos, upload source media, monitor cloud jobs, and deliver results through the hosted Media.io MCP service.",
+    "developerName": "Media.io",
+    "category": "Creativity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://www.media.io/ai/home",
+    "privacyPolicyURL": "https://www.media.io/privacy.html",
+    "termsOfServiceURL": "https://www.media.io/terms-of-service.html",
+    "defaultPrompt": [
+      "Create an image in Media.io",
+      "Animate this image in Media.io",
+      "Show my recent Media.io generations"
+    ],
+    "brandColor": "#000014",
+    "composerIcon": "./assets/logo-light.svg",
+    "logo": "./assets/logo-light.svg"
+  }
+}
