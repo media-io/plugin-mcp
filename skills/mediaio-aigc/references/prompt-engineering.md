@@ -37,7 +37,7 @@ Most models don't expose a `negative_prompt`. Phrase positively:
 - `16:9` — landscape, cinematic
 - `9:16` — vertical, social
 - `1:1` — square, profile / icon
-- `4:3`, `3:4`, `21:9` — model-dependent, check `describe_capability`
+- `4:3`, `3:4`, `21:9` — model-dependent, use only the values declared by the current generation tool
 
 ## Safety
 

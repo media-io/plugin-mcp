@@ -1,106 +1,11 @@
-# Credit approval
+# Existing-credit behavior
 
-Worked detail for the three credit modes in `SKILL.md`. Load it when a conversation is about price, approval, or a rejected charge.
+Normal generation submits quietly and consumes the user's existing credits. Do not require an estimate, balance check, account card, quote token or per-task price approval. Do not announce prices without the user's interest in cost.
 
-## Why the default is silence
+When the user asks for an estimate, call the single `estimate_credits` with a static request matching one of the seven generation operations. Put the complete business request in `request.generation`. Use the same model, inputs and settings for any later generation. Estimating never authorizes or creates a task; if the user says "estimate only", stop after reporting the estimate.
 
-`create_generation` submits directly and the server computes the charge itself. There is no gate to satisfy, no ticket to fetch, and no confirmation the protocol requires. A confirmation turn you add on your own is a cost you impose on the user, not a safety feature — and an unrequested credit figure makes the tool feel expensive for no benefit.
+`approved_credit` is an optional client amount guard for an explicit user preference. The server recalculates and rejects a mismatch with `CREDIT_CHANGED`; it does not provide an atomic upstream quote guarantee. Never bypass a requested guard on retry. Normal generation omits it.
 
-So: the user asking for the job **is** the approval. Stay quiet unless something in the conversation says otherwise.
+The creation receipt's `estimated_credit` is not the final charge receipt. Do not claim a refund or zero actual debit from a failure alone. Report only known cost information and distinguish estimates from settlement.
 
-The trade-off is deliberate. Because the server no longer refuses an unapproved submission, the discipline lives here. Escalate honestly when a trigger fires, and never quietly drop back down to Quiet because the last few jobs were cheap.
-
-## Choosing the mode
-
-Work through this once per request, using the whole conversation, not just the current turn.
-
-1. Has the user ever asked to see a price **before** generating, objected to a charge, or asked you to check before spending? Is the balance low relative to this job, or is this a batch? → **Approve first**
-2. Has the user ever mentioned credits, cost, price, balance or quota, asked what something cost, or said they want to avoid waste? → **Report**
-3. Otherwise → **Quiet**
-
-Once a conversation reaches Report or Approve first, it stays there. Only the user can move it back down, and "the last one was cheap" is not the user saying so.
-
-### Examples
-
-| The user says | Mode |
-| --- | --- |
-| "Make me a picture of a red fox in snow" | Quiet |
-| "Generate 3 variations of this poster" | Quiet — variations alone are not a trigger |
-| "How many credits do I have left?" then "ok, make the fox one" | Report — they raised balance |
-| "What did that cost?" | Report, from now on |
-| "I'm running low, let's not waste credits" | Report |
-| "How much would a 10-second video be?" | Approve first |
-| "Check with me before spending anything" | Approve first, for the rest of the conversation |
-| "Generate one for each of these 40 prompts" | Approve first — a batch multiplies the charge |
-| "Stop asking me about cost every time" | Drop to Report: keep stating the cost, stop asking |
-
-## Approve first, step by step
-
-1. Finalise the parameters and resolve any source asset **before** estimating. An estimate for parameters you then change is worthless.
-2. Call `estimate_generation` with the exact `capability_code` and `parameters` you are about to submit. It returns `credit` and, when the upstream supplies it, `balance`. It spends nothing.
-3. Tell the user: the capability (`Display Name (capability_code)`), the estimated cost, the remaining balance, and that the actual charge is resolved server-side. **Then end your turn.**
-4. Wait for a fresh, explicit message approving this specific job.
-5. Submit with `approved_credit` set to the number they approved.
-
-### What does not count as approval
-
-- The host running in auto-approve / YOLO mode.
-- A tool-permission prompt the host answered on your behalf.
-- Your own judgement that the amount is small.
-- Approval the user gave for a *different* job earlier in the conversation.
-
-If the host cannot put a question to the user at all, do not submit. Say the job is ready and waiting for credit approval, and stop.
-
-## approved_credit
-
-`approved_credit` is an optional guard, not a ticket. When you pass it, the server recomputes the price and rejects the submission with `CREDIT_CHANGED` if the two differ. When you omit it, the submission just goes through at whatever the server computes.
-
-Pass it whenever a human approved a specific number. Omit it in Quiet and Report — there is no approved number to guard.
-
-On `CREDIT_CHANGED`:
-
-1. Show the user the new number.
-2. Ask again.
-3. Submit with the new value only after they say yes.
-
-Never "fix" the mismatch by resubmitting with the recomputed number yourself. The guard exists precisely to stop that.
-
-## Insufficient credits
-
-`CREDIT_INSUFFICIENT` (or an estimate showing the balance cannot cover the job):
-
-1. Say the generation did not start and nothing was charged. The server puts that sentence first in `message`; lead with it rather than contradicting or recomputing it.
-2. Say in one short line what the balance is and what the job needs.
-3. Hand over the error's `action_url` **unchanged** — it is the same destination as `get_account.credits_url`, so there is no reason to call `get_account` for it.
-4. Name the job that is now parked and the signal that will restart it, so the user can resume with one word.
-5. Stop and end the turn. Do not offer to retry until the user says they are ready, do not poll `get_account` waiting for the balance to move, and do not resubmit on your own once it does.
-
-Never type a media.io URL from memory and never edit one you were given. The destination and its tracking parameters are owned by the server and can change without a skill update. Do not describe the destination in your own words and do not name a payment step.
-
-`PLAN_REQUIRED` is the same kind of rejection: nothing was charged, and it carries the same `action_url`. Handle it identically. Despite sounding like an access problem, it is billing — the user is signed in correctly, so never suggest re-authorizing or switching accounts.
-
-## Offers, trials and discounts
-
-No tool on this path returns offer, trial or promotional-pricing terms today. If one ever does:
-
-1. The conditions go in the same paragraph as the offer — never a turn later and never as a footnote.
-2. Amount, billing period, effective date and how to cancel, or do not mention the offer at all.
-3. Pass the server's wording through unchanged. Never invent a price, a period or a trial length, and never compress one into "free" or "cheap".
-
-## Membership-aware fallback
-
-Trigger: `CREDIT_INSUFFICIENT` or `PLAN_REQUIRED`.
-
-Read `membership.is_member` from `get_account`. Missing membership means unknown, which you treat as not a member — but do not tell the user they are on a free plan when you do not know.
-
-**Non-member** — lead with the downgrade. Name the specific fallback `capability_code` from the fallback chain in `references/model-catalog.md`, so the user knows exactly what they would get instead. Mention topping up second, with the link.
-
-**Member** — lead with topping up (the link). Mention that a cheaper capability is also an option, but do not name a specific `capability_code`; a paying member does not need to be steered toward the downgraded tier by name.
-
-Both branches need an explicit yes before you act, and the ask ends your turn. A downgrade is an offer, never a substitution you make on the user's behalf. If the user picks the fallback, re-estimate for the new capability — its price is different — and confirm again under the normal rules.
-
-## Refunds and retries
-
-- A task that ends in a failing terminal state is refunded by the server. **Always tell the user the failed attempt cost them nothing.** This is the one time you volunteer credit information in Quiet mode.
-- Every resubmission is a fresh charge. If the conversation is in Approve first, a retry needs its own approval.
-- `idempotent_replay: true` means the call replayed an existing task. Nothing extra was charged.
+Insufficient credits or entitlements mean the task is currently unavailable. Stop without transactions, purchase links, subscription or upgrade suggestions. Do not switch models, increase quantities, change request IDs or retry a task whose outcome is unknown. Existing paid entitlements remain usable.

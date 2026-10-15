@@ -1,143 +1,61 @@
 #!/usr/bin/env bash
-
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PLUGIN_NAME="$(basename "$SCRIPT_DIR")"
-DEFAULT_OUTPUT="$SCRIPT_DIR/../${PLUGIN_NAME}-web.zip"
-OUTPUT_ARG="${1:-$DEFAULT_OUTPUT}"
-
+OUTPUT_ARG="${1:-$SCRIPT_DIR/../plugin-mcp-main-web.zip}"
 for command_name in node zip; do
-  if ! command -v "$command_name" >/dev/null 2>&1; then
-    printf 'Required command not found: %s\n' "$command_name" >&2
-    exit 1
-  fi
+  command -v "$command_name" >/dev/null 2>&1 || { printf 'Required command not found: %s\n' "$command_name" >&2; exit 1; }
 done
-
-OUTPUT_DIR="$(dirname "$OUTPUT_ARG")"
-mkdir -p "$OUTPUT_DIR"
-OUTPUT_DIR="$(cd "$OUTPUT_DIR" && pwd)"
+mkdir -p "$(dirname "$OUTPUT_ARG")"
+OUTPUT_DIR="$(cd "$(dirname "$OUTPUT_ARG")" && pwd)"
 OUTPUT_PATH="$OUTPUT_DIR/$(basename "$OUTPUT_ARG")"
+BUILD_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/media-io-public-package.XXXXXX")"
+trap 'rm -rf "$BUILD_ROOT"' EXIT
+STAGED_PLUGIN="$BUILD_ROOT/plugin-mcp-main"
 
-BUILD_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/media-io-web-package.XXXXXX")"
-STAGED_PLUGIN="$BUILD_ROOT/$PLUGIN_NAME"
-STAGED_ARCHIVE="$BUILD_ROOT/${PLUGIN_NAME}-web.zip"
-
-cleanup() {
-  rm -rf "$BUILD_ROOT"
-}
-trap cleanup EXIT
-
-mkdir -p "$STAGED_PLUGIN"
-cp -R "$SCRIPT_DIR"/. "$STAGED_PLUGIN"/
-
-# Imported packages that declare MCP servers are classified as desktop-only.
-# The Web package references the existing ChatGPT App instead.
-rm -f "$STAGED_PLUGIN/mcp.json" "$STAGED_PLUGIN/.mcp.json"
-rm -rf "$STAGED_PLUGIN/.claude-plugin"
-rm -f "$STAGED_PLUGIN/package-web.sh"
-find "$STAGED_PLUGIN" -type f -name '.DS_Store' -delete
-
-node - "$STAGED_PLUGIN" <<'NODE'
-const fs = require("node:fs");
-const path = require("node:path");
-
-const pluginRoot = process.argv[2];
-
-function readJson(filePath) {
-  try {
-    return JSON.parse(fs.readFileSync(filePath, "utf8"));
-  } catch (error) {
-    throw new Error(`Unable to read valid JSON from ${filePath}: ${error.message}`);
+# 公开 ZIP 按文件白名单构建，不复制本地 App 引用、hooks、辅助脚本或潜在凭据。
+node - "$SCRIPT_DIR" "$STAGED_PLUGIN" <<'NODE'
+const fs = require('node:fs');
+const path = require('node:path');
+const [source, target] = process.argv.slice(2);
+const files = [
+  'plugin.json', 'mcp.json', 'LICENSE',
+  'assets/logo-light.svg', 'assets/mediaio-logo_48x48.png', 'assets/mediaio-logo_256x256.png',
+  'skills/mediaio-aigc/SKILL.md',
+  ...['model-catalog', 'media-inputs', 'tool-contract', 'credit-approval', 'troubleshooting', 'prompt-engineering']
+    .map(name => `skills/mediaio-aigc/references/${name}.md`)
+];
+for (const relative of files) {
+  const parts = relative.split('/');
+  for (let i = 1; i <= parts.length; i++) {
+    if (fs.lstatSync(path.join(source, ...parts.slice(0, i))).isSymbolicLink()) throw new Error(`Symlink is not allowed: ${relative}`);
   }
+  const input = path.join(source, relative);
+  if (!fs.statSync(input).isFile()) throw new Error(`Missing package file: ${relative}`);
+  const output = path.join(target, relative);
+  fs.mkdirSync(path.dirname(output), { recursive: true });
+  fs.copyFileSync(input, output);
 }
-
-function writeJson(filePath, value) {
-  fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`);
+const manifest = JSON.parse(fs.readFileSync(path.join(target, 'plugin.json'), 'utf8'));
+const mcp = JSON.parse(fs.readFileSync(path.join(target, 'mcp.json'), 'utf8'));
+const openai = manifest.extensions?.['com.openai'];
+if (!openai || openai.apps || openai.hooks || manifest.apps || manifest.hooks) throw new Error('Public package cannot reference apps or hooks');
+if (openai.interface.shortDescription.length > 30) throw new Error('Subtitle exceeds 30 characters');
+const servers = Object.values(mcp.mcpServers ?? {});
+if (servers.length !== 1 || servers[0].type !== 'streamable-http' || servers[0].url !== 'https://mcp.media.io/mcp') throw new Error('Expected the single existing remote MCP endpoint');
+if (servers[0].headers && Object.keys(servers[0].headers).length) throw new Error('Do not package server credentials');
+if (servers[0].extensions?.['com.openai']?.auth?.type !== 'oauth') throw new Error('OAuth must be declared');
+const cases = openai.review?.test_cases;
+if (cases?.positive?.length !== 5 || cases?.negative?.length !== 3) throw new Error('Expected five positive and three negative review cases');
+for (const value of [openai.interface.logo, openai.interface.composerIcon]) {
+  if (!value?.startsWith('./') || !files.includes(value.slice(2))) throw new Error('Icon reference is missing from package');
 }
-
-const appManifestPath = path.join(pluginRoot, ".app.json");
-const portableManifestPath = path.join(pluginRoot, "plugin.json");
-const codexManifestPath = path.join(pluginRoot, ".codex-plugin", "plugin.json");
-
-for (const requiredPath of [appManifestPath, portableManifestPath, codexManifestPath]) {
-  if (!fs.existsSync(requiredPath)) {
-    throw new Error(`Required Web package file is missing: ${requiredPath}`);
-  }
-}
-
-const appManifest = readJson(appManifestPath);
-const appEntries = Object.entries(appManifest.apps ?? {});
-if (appEntries.length === 0) {
-  throw new Error(".app.json must reference at least one existing ChatGPT App");
-}
-
-for (const [referenceName, appReference] of appEntries) {
-  if (!appReference || typeof appReference !== "object") {
-    throw new Error(`Invalid App reference: ${referenceName}`);
-  }
-  if (!/^(asdk_app_|connector_|templated_apps_)/.test(appReference.id ?? "")) {
-    throw new Error(`Unsupported ChatGPT App ID for ${referenceName}: ${appReference.id ?? "missing"}`);
-  }
-  appReference.required = true;
-}
-writeJson(appManifestPath, appManifest);
-
-const portableManifest = readJson(portableManifestPath);
-delete portableManifest.mcpServers;
-portableManifest.extensions ??= {};
-portableManifest.extensions["com.openai"] ??= {};
-delete portableManifest.extensions["com.openai"].mcpServers;
-portableManifest.extensions["com.openai"].apps = "./.app.json";
-writeJson(portableManifestPath, portableManifest);
-
-const codexManifest = readJson(codexManifestPath);
-delete codexManifest.mcpServers;
-codexManifest.apps = "./.app.json";
-writeJson(codexManifestPath, codexManifest);
-
-function visitJsonFiles(directory) {
-  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
-    const entryPath = path.join(directory, entry.name);
-    if (entry.isDirectory()) {
-      visitJsonFiles(entryPath);
-      continue;
-    }
-    if (!entry.isFile() || !entry.name.endsWith(".json")) continue;
-
-    const document = readJson(entryPath);
-    const stack = [document];
-    while (stack.length > 0) {
-      const value = stack.pop();
-      if (!value || typeof value !== "object") continue;
-      if (Object.prototype.hasOwnProperty.call(value, "mcpServers")) {
-        throw new Error(`Web package still declares mcpServers in ${entryPath}`);
-      }
-      stack.push(...Object.values(value));
-    }
-  }
-}
-
-visitJsonFiles(pluginRoot);
 NODE
-
-if find "$STAGED_PLUGIN" -type f \( -name 'mcp.json' -o -name '.mcp.json' \) | grep -q .; then
-  printf 'Web package still contains an MCP manifest.\n' >&2
-  exit 1
-fi
 
 (
   cd "$BUILD_ROOT"
-  zip -qr "$STAGED_ARCHIVE" "$PLUGIN_NAME" -x '*/.DS_Store'
+  zip -qr "$BUILD_ROOT/public.zip" plugin-mcp-main
 )
-
-mv -f "$STAGED_ARCHIVE" "$OUTPUT_PATH"
-
-printf 'Created Web plugin package: %s\n' "$OUTPUT_PATH"
-printf 'ChatGPT App references:\n'
-node -e '
-  const manifest = require(process.argv[1]);
-  for (const [name, app] of Object.entries(manifest.apps)) {
-    console.log(`- ${name}: ${app.id} (required=${app.required === true})`);
-  }
-' "$STAGED_PLUGIN/.app.json"
+mv -f "$BUILD_ROOT/public.zip" "$OUTPUT_PATH"
+printf 'Created remote MCP plugin package: %s\n' "$OUTPUT_PATH"
+printf 'Before submission: complete real-account verification, demo recording and secure reviewer access in the dashboard.\n'
