@@ -1,50 +1,54 @@
 # Media.io
 
-通过 `https://mcp.media.io/mcp` 使用七类静态生成操作：文生图、图生图、文生视频、图生视频、参考生视频、动作控制、图片加音频音乐视频。2026-10-15 冻结目录覆盖 119 个模型操作条目（包含历史 115 条）；参数范围以实际工具 schema 为准。OAuth 及 DCR 通过现有服务发现，不需要本地 CLI。
+Use seven static generation operations through `https://mcp.media.io/mcp`: text to image, image to image, text to video, image to video, reference to video, motion control, and image-plus-audio music video. The catalog frozen on 2026-10-15 covers 119 model-operation entries, including the original 115. The actual tool schema defines the accepted parameter ranges. OAuth and DCR use discovery on the existing service; no local CLI is required.
 
-用户请求生成且已有积分/权益足够时，直接创建并正常消耗积分。`estimate_credits` 仅用于主动询价，不是前置步骤。插件不提供积分、订阅或数字商品交易入口。
+When the user requests generation and has sufficient credits and entitlements, create the task directly and charge credits normally. Use `estimate_credits` only when the user asks for a quote; it is not a prerequisite. The plugin provides no purchase entry points for credits, subscriptions, or digital goods.
 
-用户查看历史生成任务时调用 `list_generations_card`，直接展示状态、时间和可用产物；默认展示第一页 10 条，翻页保留筛选条件。后台核对仍使用无 UI 的 `list_generations`。
+Use `list_generations_card` when the user wants to view generation history. Show status, timestamps, and available outputs directly. Display the first page of 10 entries by default and preserve filters when paging. Use the non-UI `list_generations` tool for background checks.
 
-用户查看账号、积分或会员时调用 `get_account_card`，卡片显示当前已授权账号的昵称、邮箱、已有会员状态与积分，仅提供由用户点击的 `My Assets` 资产页入口。身份仅通过工具结果 `_meta["mediaio/accountIdentity"]` 交付组件，不进入模型可见的 `content`、`structuredContent` 或工具定义；缺失昵称显示通用名称，缺失邮箱隐藏该行。`get_account` 仍只返回权益与积分数据。卡片不自动导航，不提供主页、购买、升级或账户管理按钮。
+Use `get_account_card` when the user wants to view their account, credits, or membership. The card displays the authorized account's nickname, email, existing membership status, and credits. Its only navigation entry is the user-clicked `My Assets` link. Identity is delivered to the component only through the tool result's `_meta["mediaio/accountIdentity"]`, never through model-visible `content`, `structuredContent`, or tool definitions. Use a generic name when the nickname is missing and hide the email row when no email is available. `get_account` continues to return only entitlements and credits. The card does not navigate automatically or provide home, purchase, upgrade, or account-management buttons.
 
-## 文件与分发
+## Files and distribution
 
-| 文件 | 用途 |
+| File | Purpose |
 | --- | --- |
-| `plugin.json` / `mcp.json` | 公开 portable 插件身份、审核预期用例与远程 MCP 配置 |
-| `.codex-plugin/plugin.json` / `.mcp.json` | 本地 Codex 配置；与 portable manifest 保持版本和展示信息一致 |
-| `.app.json` | 保留的历史本地 App 映射；当前 manifest 不引用，公开 ZIP 不包含 |
-| `.agents/plugins/marketplace.json` | 本地 marketplace |
-| `skills/mediaio-aigc/` | 静态多模型工具编排与生成的模型目录 |
-| `chatgpt-app-submission.json` | Apps submission 导入材料：App Info、17 个工具注解理由及五正三负预期用例，覆盖七类动作及多模型选型；单独上传，不进入公开 ZIP，不代表真实验收已通过 |
-| `package-web.sh` | 按明确文件清单生成公开远程 MCP ZIP |
+| `plugin.json` / `mcp.json` | Public portable plugin identity, expected review cases, and remote MCP configuration |
+| `.codex-plugin/plugin.json` / `.mcp.json` | Local Codex configuration, with version and display information matching the portable manifest |
+| `.app.json` | Retained legacy local App mapping; not referenced by the current manifest or included in the public ZIP |
+| `.agents/plugins/marketplace.json` | Local marketplace |
+| `skills/mediaio-aigc/` | Static orchestration of multiple model tools and the generated model catalog |
+| `chatgpt-app-submission.json` | Apps submission import material: App Info, annotation justifications for 17 tools, and five positive plus three negative expected cases covering all seven operations and model selection. Uploaded separately, excluded from the public ZIP, and not evidence of completed live validation |
+| `package-web.sh` | Builds the public remote MCP ZIP from an explicit file allowlist |
 
-此目录作为 MCP 插件源码根导出到 `media-io/plugin-mcp`。源码快照和公开送审 ZIP 用途不同：前者保留本地配置及维护工具，后者只包含 portable manifest、远程 MCP、Skill、许可和品牌资源。公开包不包含 App ID、hooks、辅助脚本、测试账号或凭据。
+This directory is exported to `media-io/plugin-mcp` as the MCP plugin source root. Source snapshots retain local configuration and maintenance tools. The public review ZIP contains only the portable manifest, remote MCP configuration, Skill, license, and brand assets. The public package excludes App IDs, hooks, helper scripts, test accounts, and credentials.
 
-## 验证与打包
+The `mcp.json` and `.mcp.json` files used for Codex installation declare only the remote server's `type` and `url`. Some Codex versions reject `extensions` in server entries with `unknown field extensions` and skip the MCP server. OAuth, DCR, and the `mediaio:basic` scope are discovered through the server's `401 WWW-Authenticate` challenge and well-known metadata. Omitting the local auth declaration does not enable anonymous access. `package-web.sh` adds `extensions.com.openai.auth` only to the temporary `mcp.json` included in the web submission ZIP, without rewriting the source configuration.
 
-在主仓执行：
+Users with the old configuration should update the plugin, reload Codex, then connect Media.io in MCP settings and complete OAuth authorization. Configuration parsing and account authorization are separate steps.
+
+## Validation and packaging
+
+Run from the parent repository:
 
 ```bash
 node --test deploy/*.test.mjs
 bash plugin-mcp-main/package-web.sh /tmp/media-io-remediation.zip
 ```
 
-公开格式依据 [OpenAI 打包规范](https://developers.openai.com/plugins/build/plugins) 和 [发布规范](https://developers.openai.com/plugins/deploy/submission)。`extensions.com.openai` 存在时不会与 Codex overlay 合并，因此公开包自行包含完整展示与审核设置。
+The public format follows the [OpenAI packaging specification](https://developers.openai.com/plugins/build/plugins) and [submission specification](https://developers.openai.com/plugins/deploy/submission). When `extensions.com.openai` is present, it is not merged with the Codex overlay, so the public package includes complete display and review settings.
 
-首次 MCP 审核需要五个正向、三个负向用例、真实可访问演示录像，以及后台安全表单中的审核访问方式。JSON 用例描述的是预期行为，不能当作已实跑通过。正式送审前完成真实账号生成、扣费、素材权限、组件及宿主上传闭环；补齐录像，再部署同一 `/mcp`、重新扫描和提交。当前构建不代替这些步骤。
+Initial MCP review requires five positive cases, three negative cases, an accessible recording of a real demo, and reviewer access instructions in the dashboard's secure form. The JSON cases describe expected behavior and do not prove successful execution. Before submission, complete live validation with a real account for generation, credit charges, media permissions, components, and host uploads. Add the recording, deploy the same `/mcp` endpoint, rescan, and submit. Building the package does not replace these steps.
 
-服务的两个 UI 资源使用部署环境生效的 `MCP_PUBLIC_BASE_URL` 作为 `ui.domain` 和 `openai/widgetDomain`，灰度为 `https://mcp-mcp.media.io`、生产为 `https://mcp.media.io`；图片、视频等外部资源仍由各组件的 CSP 白名单控制。Apollo 配置在启动时加载，更新后需重启服务。在 ChatGPT 刷新连接和工具扫描后，分别查看账号卡、历史卡及已有完成任务的结果卡，确认卡片、媒体、空态和翻页正常；这些只读渲染检查无需创建新任务或消耗生成积分。
+The service's two UI resources use the deployment's effective `MCP_PUBLIC_BASE_URL` for `ui.domain` and `openai/widgetDomain`: `https://mcp-mcp.media.io` in staging and `https://mcp.media.io` in production. Each component's CSP allowlist continues to control external resources such as images and videos. Apollo configuration loads at startup, so updates require a service restart. After refreshing the connection and tool scan in ChatGPT, open the account card, history card, and result card for an existing completed task. Verify cards, media, empty states, and pagination. These read-only rendering checks require no new tasks or generation credits.
 
-## 本地开发
+## Local development
 
-在本目录运行 `codex plugin marketplace add .` 和 `codex plugin add media-io@media-io`。插件使用远程服务；当前服务器尚未部署静态契约时，新 Skill 不能被认定已完成线上验证。
+Run `codex plugin marketplace add .` and `codex plugin add media-io@media-io` from this directory. The plugin uses a remote service. The new Skill cannot be considered validated online until the server has deployed the static contract.
 
-产品：[Media.io](https://www.media.io/ai/home)；隐私：[Privacy](https://www.media.io/privacy.html)；条款：[Terms](https://www.media.io/terms-of-service.html)。许可见 [LICENSE](LICENSE)。
+Product: [Media.io](https://www.media.io/ai/home). Privacy: [Privacy](https://www.media.io/privacy.html). Terms: [Terms](https://www.media.io/terms-of-service.html). See [LICENSE](LICENSE) for licensing.
 
-## 多模型契约维护
+## Maintaining the multi-model contract
 
-生成请求为 `{request: {model, prompt?, inputs?, options?}, client_request_id, approved_credit?}`，询价为 `{request: {operation, generation: <同一业务 request>}}`。字段不是开放字典，必须满足所选模型的静态分支；一次调用创建一个任务。模型清单及 schema 从 MCP 仓内净化快照离线编译，不随线上目录自动扩充。
+Generation requests use `{request: {model, prompt?, inputs?, options?}, client_request_id, approved_credit?}`. Quote requests use `{request: {operation, generation: <same generation request>}}`. Fields are not open dictionaries: they must match the selected model's static schema branch. Each call creates one task. The model list and schemas are compiled offline from sanitized snapshots in the MCP repository and do not automatically expand with the live catalog.
 
-在 `media-plugin-mcp` 执行 `node scripts/generate-model-contracts.mjs --skill-dir ../media-plugin-main/plugin-mcp-main/skills/mediaio-aigc` 同步目录；加 `--check` 校验产物。来源、参数限制交集、119 条矩阵和待完成的真实宿主/计费验收见 [实施与验证记录](../../media-plugin-api/docs/mcp/MCP多模型实施与验证记录.md)。
+In `media-plugin-mcp`, run `node scripts/generate-model-contracts.mjs --skill-dir ../media-plugin-main/plugin-mcp-main/skills/mediaio-aigc` to synchronize the catalog. Add `--check` to validate generated artifacts. See the [implementation and validation record](../../media-plugin-api/docs/mcp/MCP%E5%A4%9A%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E4%B8%8E%E9%AA%8C%E8%AF%81%E8%AE%B0%E5%BD%95.md) for sources, the intersection of parameter constraints, the 119-entry matrix, and pending live host and billing validation.

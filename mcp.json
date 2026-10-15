@@ -3,20 +3,7 @@
   "mcpServers": {
     "media-io-mcp": {
       "type": "streamable-http",
-      "url": "https://mcp.media.io/mcp",
-      "extensions": {
-        "com.openai": {
-          "auth": {
-            "type": "oauth",
-            "client": {
-              "mode": "dcr"
-            },
-            "baseScopes": [
-              "mediaio:basic"
-            ]
-          }
-        }
-      }
+      "url": "https://mcp.media.io/mcp"
     }
   }
 }

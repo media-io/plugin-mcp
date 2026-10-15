@@ -13,7 +13,7 @@ BUILD_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/media-io-public-package.XXXXXX")"
 trap 'rm -rf "$BUILD_ROOT"' EXIT
 STAGED_PLUGIN="$BUILD_ROOT/plugin-mcp-main"
 
-# 公开 ZIP 按文件白名单构建，不复制本地 App 引用、hooks、辅助脚本或潜在凭据。
+# Build the public ZIP from an allowlist, excluding local App references, hooks, helper scripts, and potential credentials.
 node - "$SCRIPT_DIR" "$STAGED_PLUGIN" <<'NODE'
 const fs = require('node:fs');
 const path = require('node:path');
@@ -44,7 +44,13 @@ if (openai.interface.shortDescription.length > 30) throw new Error('Subtitle exc
 const servers = Object.values(mcp.mcpServers ?? {});
 if (servers.length !== 1 || servers[0].type !== 'streamable-http' || servers[0].url !== 'https://mcp.media.io/mcp') throw new Error('Expected the single existing remote MCP endpoint');
 if (servers[0].headers && Object.keys(servers[0].headers).length) throw new Error('Do not package server credentials');
-if (servers[0].extensions?.['com.openai']?.auth?.type !== 'oauth') throw new Error('OAuth must be declared');
+// Codex uses server-side OAuth discovery; add the auth declaration only to the staged web submission copy.
+servers[0].extensions = {
+  'com.openai': {
+    auth: { type: 'oauth', client: { mode: 'dcr' }, baseScopes: ['mediaio:basic'] }
+  }
+};
+fs.writeFileSync(path.join(target, 'mcp.json'), `${JSON.stringify(mcp, null, 2)}\n`);
 const cases = openai.review?.test_cases;
 if (cases?.positive?.length !== 5 || cases?.negative?.length !== 3) throw new Error('Expected five positive and three negative review cases');
 for (const value of [openai.interface.logo, openai.interface.composerIcon]) {
