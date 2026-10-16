@@ -4,7 +4,7 @@
   "app_info": {
     "display_name": "Media.io",
     "subtitle": "Create images and videos",
-    "description": "Choose supported AI models to create images and videos from text, images or model-supported references in ChatGPT. Transfer motion from a video to an image, or combine an image and audio into a music video. Reuse files in your private Media.io drive, view paginated generation history and display finished results. View your connected account and existing credit balance in a card, with a My Assets link. Compare estimated credit costs when requested; generation uses existing credits and entitlements without requiring a separate price-confirmation step. Models and settings are limited to the current tool schemas. The app does not offer credit purchases, subscriptions or upgrades.",
+    "description": "Choose supported AI models to create images and videos from text, images or model-supported references in ChatGPT. Transfer motion from a video to an image, or combine an image and audio into a music video. Reuse files in your private Media.io drive, view paginated generation history and display finished results. View your connected account and existing credit balance in a card. Compare estimated credit costs when requested; generation uses existing credits and entitlements without requiring a separate price-confirmation step. Models and settings are limited to the current tool schemas. The app does not offer credit purchases, subscriptions or upgrades.",
     "category": "DESIGN"
   },
   "tools": {
@@ -27,8 +27,8 @@
         "destructiveHint": false
       },
       "justifications": {
-        "read_only_justification": "Displays the connected account’s available nickname and email only inside the card, alongside existing balance, membership and a user-clicked My Assets link, without changing account state.",
-        "open_world_justification": "Reads only the authenticated user’s private account and offers one fixed Media.io assets link without automatically navigating or publishing data.",
+        "read_only_justification": "Displays the connected account’s available nickname and email only inside the card, alongside existing balance and membership, without changing account state.",
+        "open_world_justification": "Reads only the authenticated user’s private account without navigation links or publishing data.",
         "destructive_justification": "Does not initiate purchases, consume credits or modify entitlements."
       }
     },
@@ -219,7 +219,7 @@
       "user_prompt": "Show my Media.io balance card and compare the estimated credits for a red paper crane image using GPT Image 2 and Nano Banana 2.1, each with its default settings. Only estimate; do not generate anything.",
       "file_attachment_urls": null,
       "tools_triggered": "get_account_card, estimate_credits",
-      "expected_output": "Shows the available nickname and email only in the account card, using a generic name or hiding the email row when missing, with My Assets as its only button. Returns separate estimates for the two models without creating tasks or consuming credits. Does not repeat account identity in prose, navigate automatically, or offer homepage, account-management or purchase controls.",
+      "expected_output": "Shows the available nickname and email only in the account card, using a generic name or hiding the email row when missing, without buttons or navigation links. Returns separate estimates for the two models without creating tasks or consuming credits. Does not repeat account identity in prose or offer purchase controls.",
       "expected_output_url": null
     },
     {

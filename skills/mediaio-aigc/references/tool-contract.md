@@ -9,7 +9,7 @@ Seven generation tools use a nested `request` containing an exact `model`, model
 | Read tool | Behavior |
 | --- | --- |
 | `get_account` | Existing membership/credits, no account identifiers or transaction links |
-| `get_account_card` | Same model-visible balance/entitlements, rendered only on user request; nickname and email arrive only in widget metadata, with a fixed My Assets link and no transaction controls |
+| `get_account_card` | Same model-visible balance/entitlements, rendered only on user request; nickname and email arrive only in widget metadata, with no buttons or navigation links |
 | `get_generation` | `task_ids` (1–50), optional `wait_ms` (0–60000); defaults to 25000; returns tasks, `all_terminal`, `poll_after_ms` |
 | `get_generation_card` | Render finished tasks once using `task_ids` |
 | `list_generations` | Background history data: optional task IDs (max 50), statuses (max 20), positive page and page size (max 100); returns `generations` and `total`; no time-window input |
@@ -18,7 +18,7 @@ Seven generation tools use a nested `request` containing an exact `model`, model
 
 Uploads are two separate write operations around a host-performed PUT. `create_upload` accepts metadata and SHA-1 digests, returns a presigned transfer or completed rapid upload. `complete_upload` accepts only the ticket ID after the transfer and returns `file_id`. They cannot receive file bytes or fetch arbitrary URLs. Upload availability depends on the host's actual byte/hash/PUT capabilities.
 
-The account card's result `_meta["mediaio/accountIdentity"]` contains only the connected user's available nickname and email for display; these fields are absent from `content`, `structuredContent` and the tool definition. Missing identity fields use a generic name or omit the email row. My Assets opens the fixed assets page only on a user click. The card does not navigate automatically or provide homepage, purchase, upgrade or account-management buttons.
+The account card's result `_meta["mediaio/accountIdentity"]` contains only the connected user's available nickname and email for display; these fields are absent from `content`, `structuredContent` and the tool definition. Missing identity fields use a generic name or omit the email row. The card only displays account information, without buttons or navigation links.
 
 Errors have `ok: false`, `error.code`, `message`, `retryable` and optional diagnostic fields. The text and structured result agree. Billing errors do not contain transaction actions. Internal diagnostics are not user-facing content.
 

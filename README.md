@@ -6,7 +6,7 @@ When the user requests generation and has sufficient credits and entitlements, c
 
 Use `list_generations_card` when the user wants to view generation history. Show status, timestamps, and available outputs directly. Display the first page of 10 entries by default and preserve filters when paging. Use the non-UI `list_generations` tool for background checks.
 
-Use `get_account_card` when the user wants to view their account, credits, or membership. The card displays the authorized account's nickname, email, existing membership status, and credits. Its only navigation entry is the user-clicked `My Assets` link. Identity is delivered to the component only through the tool result's `_meta["mediaio/accountIdentity"]`, never through model-visible `content`, `structuredContent`, or tool definitions. Use a generic name when the nickname is missing and hide the email row when no email is available. `get_account` continues to return only entitlements and credits. The card does not navigate automatically or provide home, purchase, upgrade, or account-management buttons.
+Use `get_account_card` when the user wants to view their account, credits, or membership. The card displays the authorized account's nickname, email, existing membership status, and credits, without buttons or navigation links. Identity is delivered to the component only through the tool result's `_meta["mediaio/accountIdentity"]`, never through model-visible `content`, `structuredContent`, or tool definitions. Use a generic name when the nickname is missing and hide the email row when no email is available. `get_account` continues to return only entitlements and credits.
 
 ## Files and distribution
 

@@ -20,7 +20,7 @@ const path = require('node:path');
 const [source, target] = process.argv.slice(2);
 const files = [
   'plugin.json', 'mcp.json', 'LICENSE',
-  'assets/logo-light.svg', 'assets/mediaio-logo_48x48.png', 'assets/mediaio-logo_256x256.png',
+  ...[32, 48, 128, 256].flatMap(size => ['png', 'svg'].map(extension => `assets/mi-logo-${size}.${extension}`)),
   'skills/mediaio-aigc/SKILL.md',
   'skills/mediaio-aigc/references/model-release.json',
   ...['model-catalog', 'model-selection', 'media-inputs', 'tool-contract', 'credit-approval', 'troubleshooting', 'prompt-engineering']

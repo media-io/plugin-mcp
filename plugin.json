@@ -38,8 +38,8 @@
           "Show my recent Media.io generations"
         ],
         "brandColor": "#000014",
-        "composerIcon": "./assets/logo-light.svg",
-        "logo": "./assets/logo-light.svg",
+        "composerIcon": "./assets/mi-logo-32.svg",
+        "logo": "./assets/mi-logo-256.svg",
         "supportURL": "https://support.wondershare.com/how-tos/media-io/"
       },
       "review": {
@@ -55,7 +55,7 @@
               "description": "Use private drive images for editing and a declared start/end-frame video.",
               "prompt": "Show my account balance card. Create a watercolor interpretation of my first Media.io drive image with GPT Image 2. Then use my first two drive images as the starting and ending frames for a Vidu 2.0 video, and show the results.",
               "tools_triggered": "get_account_card, list_assets, image_to_image, image_to_video, get_generation, get_generation_card",
-              "expected_behavior": "Shows the current balance and available nickname/email only inside the account card, with a user-clicked My Assets link, no purchase controls and no automatic navigation. Does not repeat identity in prose. Resolves authorized file IDs and chooses the declared image-edit and Vidu start/end-frame branches. Requires both frames and follows coupled duration/resolution constraints. Preserves sources, uses existing credits and creates only the two requested tasks. If sources are missing, asks for them before creating the affected task."
+              "expected_behavior": "Shows the current balance and available nickname/email only inside the account card, without buttons or navigation links. Does not repeat identity in prose. Resolves authorized file IDs and chooses the declared image-edit and Vidu start/end-frame branches. Requires both frames and follows coupled duration/resolution constraints. Preserves sources, uses existing credits and creates only the two requested tasks. If sources are missing, asks for them before creating the affected task."
             },
             {
               "description": "Generate a video with a selected model and bounded settings.",
