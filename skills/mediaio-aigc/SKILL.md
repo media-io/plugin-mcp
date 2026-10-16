@@ -33,15 +33,15 @@ Use the connected tools and their static input schemas as the contract. If unava
 | Animate an image using a motion video | `motion_control` | Reference image and motion video |
 | Music video from an image and audio | `image_audio_to_video` | Image and audio |
 
-Read [model-catalog.md](references/model-catalog.md) for all 119 model-operation entries in release 2026-10-15. Match the user's selected model to an exact ID within the requested action. Repeated display names are not unique IDs: ask for clarification when the available variants materially differ. Never infer a workflow code or transfer options from another model.
+Read [model-catalog.md](references/model-catalog.md) for this release's callable models and lifecycle status. Match the user's selected model to an exact ID within the requested action. Repeated display names are not unique IDs: ask for clarification when the available variants materially differ. Never infer a workflow code or transfer options from another model.
 
-When the user does not specify a model, use these established defaults: GPT Image 2 for text/image-to-image, ToMoviee 2.0 for text-to-video, Kling 3.0 for image animation, and Wan 3.0 for reference-to-video. The dedicated motion and music-video actions each have one declared model. This is a selection default, not a restriction on the other catalog models. Never switch away from an explicitly selected model without the user's request.
+When the user does not specify a model, read [model-selection.md](references/model-selection.md) for generated defaults, scenario rules and aliases. Follow only actions exposed by the connected server. Deprecated models are not defaults or recommendations; replacement candidates do not authorize substitution. Never switch away from an explicitly selected model without the user's request.
 
 Video editing or extension as a separate operation, persistent character creation, training and publishing are outside this release. A temporarily unavailable model does not authorize discovery or bypassing the declared contract. New upstream models do not become callable automatically.
 
 ## Normal flow
 
-1. Select the operation and exact model. Put business fields inside `request`: `model`, the declared `prompt`, model-specific `inputs`, and strict `options`. Use the schema defaults; ask only for missing intent or required source media. One call creates one task, not a Web UI batch.
+1. Select the operation and exact model. Put business fields inside `request`: `model`, the declared `prompt`, model-specific `inputs`, and strict `options`. When a model declares `options.dimensions`, select its exact `WIDTHxHEIGHT` string enum (for example `"1024x1024"`); never send a width/height array. Use the schema defaults; ask only for missing intent or required source media. One call creates one task, not a Web UI batch.
 2. Resolve source media with `list_assets`. For an earlier task output, use its `asset_id` to look up the corresponding `file_id`. Never invent an ID, use another account's media, or pass a URL/path as a file ID.
 3. Submit with the corresponding generation tool and a stable `client_request_id`. The user's generation request authorizes the normal use of their existing credits. Do not add an estimate, account card, cost announcement or credit-confirmation turn by default.
 4. Read `task_id`, call `get_generation`, and continue after `poll_after_ms` until all tasks are terminal. A call may wait 25 seconds. Do not resubmit a running task.

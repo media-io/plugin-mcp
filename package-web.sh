@@ -22,7 +22,8 @@ const files = [
   'plugin.json', 'mcp.json', 'LICENSE',
   'assets/logo-light.svg', 'assets/mediaio-logo_48x48.png', 'assets/mediaio-logo_256x256.png',
   'skills/mediaio-aigc/SKILL.md',
-  ...['model-catalog', 'media-inputs', 'tool-contract', 'credit-approval', 'troubleshooting', 'prompt-engineering']
+  'skills/mediaio-aigc/references/model-release.json',
+  ...['model-catalog', 'model-selection', 'media-inputs', 'tool-contract', 'credit-approval', 'troubleshooting', 'prompt-engineering']
     .map(name => `skills/mediaio-aigc/references/${name}.md`)
 ];
 for (const relative of files) {
