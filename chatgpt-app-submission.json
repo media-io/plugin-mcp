@@ -2,7 +2,7 @@
   "$schema": "https://developers.openai.com/apps-sdk/schemas/chatgpt-app-submission.v1.json",
   "schema_version": 1,
   "app_info": {
-    "display_name": "Media.io",
+    "display_name": "Wondershare Media.io",
     "subtitle": "Create images and videos",
     "description": "Choose supported AI models to create images and videos from text, images or model-supported references in ChatGPT. Transfer motion from a video to an image, or combine an image and audio into a music video. Reuse files in your private Media.io drive, view paginated generation history and display finished results. View your connected account and existing credit balance in a card. Compare estimated credit costs when requested; generation uses existing credits and entitlements without requiring a separate price-confirmation step. Models and settings are limited to the current tool schemas. The app does not offer credit purchases, subscriptions or upgrades.",
     "category": "DESIGN"

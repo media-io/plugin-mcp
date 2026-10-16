@@ -1,6 +1,6 @@
 # Model selection
 
-Release 2026-10-16-p183-15876; environment prod; contract_digest `d3ff6abe6dff70e7d761520f5cfdbbae82e20bb219445c8bb385852a29af8ed2`; selection_digest `8f8cae7474b4ab11c38258d43a547e8cf63bd424b23619c952c7d89c4c06d0a5`.
+Release 2026-10-16-parameter-guidance; environment prod; contract_digest `5f113f916338f43286fbd74ef93c7c1a74a0ae6e3aab4a30bd2a716e7475ab90`; selection_digest `8f8cae7474b4ab11c38258d43a547e8cf63bd424b23619c952c7d89c4c06d0a5`.
 
 Use these defaults only when the user has not selected a model. An explicit selection never authorizes automatic substitution. Read the connected tool schema for all settings.
 

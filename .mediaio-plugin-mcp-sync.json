@@ -2,7 +2,7 @@
   "schema_version": 1,
   "source_repository": "media-plugin-main",
   "source_directory": "plugin-mcp-main",
-  "source_commit": "c1d4c8bda526a8f4ca683dfb00652077a43a8fd9",
+  "source_commit": "431d9e7603d3b55d112f677d01d30348d05f1800",
   "managed_paths": [
     ".agents",
     ".app.json",

@@ -23,16 +23,20 @@ const files = [
   'assets/logo-light.svg', 'assets/mediaio-logo_48x48.png', 'assets/mediaio-logo_256x256.png',
   'skills/mediaio-aigc/SKILL.md',
   'skills/mediaio-aigc/references/model-release.json',
-  ...['model-catalog', 'model-selection', 'media-inputs', 'tool-contract', 'credit-approval', 'troubleshooting', 'prompt-engineering']
+  ...['model-catalog', 'model-selection', 'model-parameters', 'media-inputs', 'tool-contract', 'credit-approval', 'troubleshooting', 'prompt-engineering']
     .map(name => `skills/mediaio-aigc/references/${name}.md`)
 ];
 for (const relative of files) {
+  if (/[^\x20-\x7e]/.test(relative)) throw new Error(`English file names are required: ${relative}`);
   const parts = relative.split('/');
   for (let i = 1; i <= parts.length; i++) {
     if (fs.lstatSync(path.join(source, ...parts.slice(0, i))).isSymbolicLink()) throw new Error(`Symlink is not allowed: ${relative}`);
   }
   const input = path.join(source, relative);
   if (!fs.statSync(input).isFile()) throw new Error(`Missing package file: ${relative}`);
+  if (!relative.endsWith('.png') && /\p{Script=Han}/u.test(fs.readFileSync(input, 'utf8').replaceAll('\u5929\u5e55', ''))) {
+    throw new Error(`English content is required; only the ToMoviee Chinese brand name is allowed: ${relative}`);
+  }
   const output = path.join(target, relative);
   fs.mkdirSync(path.dirname(output), { recursive: true });
   fs.copyFileSync(input, output);

@@ -20,7 +20,7 @@
   "mcpServers": "./.mcp.json",
   "skills": "./skills/",
   "interface": {
-    "displayName": "Media.io",
+    "displayName": "Wondershare Media.io",
     "shortDescription": "Create images and videos",
     "longDescription": "Create images and videos with model selection across a static catalog of 119 model-operation entries. Generate from text, images or declared mixed references, transfer motion from a video, or create a music video from an image and audio. Reuse private Media.io drive files, view paginated history cards, monitor tasks and display finished media. Check existing credits and estimate costs when requested. Generation consumes existing account credits and entitlements; models and options are limited to the current tool schemas.",
     "developerName": "Media.io",
@@ -33,9 +33,9 @@
     "privacyPolicyURL": "https://www.media.io/privacy.html",
     "termsOfServiceURL": "https://www.media.io/terms-of-service.html",
     "defaultPrompt": [
-      "Create an image in Media.io",
-      "Animate this image in Media.io",
-      "Show my recent Media.io generations"
+      "Create an image in Wondershare Media.io",
+      "Animate this image in Wondershare Media.io",
+      "Show my recent Wondershare Media.io generations"
     ],
     "brandColor": "#000014",
     "composerIcon": "./assets/logo-light.svg",

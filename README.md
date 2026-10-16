@@ -1,4 +1,4 @@
-# Media.io
+# Wondershare Media.io
 
 Use seven static generation operations through `https://mcp.media.io/mcp`: text to image, image to image, text to video, image to video, reference to video, motion control, and image-plus-audio music video. The catalog frozen on 2026-10-15 covers 119 model-operation entries, including the original 115. The actual tool schema defines the accepted parameter ranges. OAuth and DCR use discovery on the existing service; no local CLI is required.
 
@@ -24,7 +24,7 @@ This directory is exported to `media-io/plugin-mcp` as the MCP plugin source roo
 
 The `mcp.json` and `.mcp.json` files used for Codex installation declare only the remote server's `type` and `url`. Some Codex versions reject `extensions` in server entries with `unknown field extensions` and skip the MCP server. OAuth, DCR, and the `mediaio:basic` scope are discovered through the server's `401 WWW-Authenticate` challenge and well-known metadata. Omitting the local auth declaration does not enable anonymous access. `package-web.sh` adds `extensions.com.openai.auth` only to the temporary `mcp.json` included in the web submission ZIP, without rewriting the source configuration.
 
-Users with the old configuration should update the plugin, reload Codex, then connect Media.io in MCP settings and complete OAuth authorization. Configuration parsing and account authorization are separate steps.
+Users with the old configuration should update the plugin, reload Codex, then connect Wondershare Media.io in MCP settings and complete OAuth authorization. Configuration parsing and account authorization are separate steps.
 
 ## Validation and packaging
 
