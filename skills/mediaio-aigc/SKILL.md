@@ -43,7 +43,7 @@ Video editing or extension as a separate operation, persistent character creatio
 
 1. Select the operation and exact model. Put business fields inside `request`: `model`, the declared `prompt`, model-specific `inputs`, and strict `options`. When a model declares `options.dimensions`, select its exact `WIDTHxHEIGHT` string enum (for example `"1024x1024"`); never send a width/height array. Use the schema defaults; ask only for missing intent or required source media. One call creates one task, not a Web UI batch.
 2. Resolve source media with `list_assets`. For an earlier task output, use its `asset_id` to look up the corresponding `file_id`. Never invent an ID, use another account's media, or pass a URL/path as a file ID.
-3. Submit with the corresponding generation tool and a stable `client_request_id`. The user's generation request authorizes the normal use of their existing credits. Do not add an estimate, account card, cost announcement or credit-confirmation turn by default.
+3. Submit with the corresponding generation tool and a stable `client_request_id`, omitting `approved_credit` by default. The user's generation request authorizes the normal use of their existing credits. Do not add an estimate, account card, cost announcement or credit-confirmation turn by default. The server skips pre-submission estimation on this path; batch size or an inferred interest in saving credits does not change it.
 4. Read `task_id`, call `get_generation`, and continue after `poll_after_ms` until all tasks are terminal. A call may wait 25 seconds. Do not resubmit a running task.
 5. Call `get_generation_card` once after completion. The card is the result presentation; follow it with at most a short sentence.
 
@@ -61,7 +61,9 @@ Use `list_generations` for background inspection, including matching an uncertai
 
 `estimate_credits` takes `{ "request": { "operation": "text_to_image", "generation": { "model": "text2image_gpt_image_2", "prompt": "A red paper crane" } } }`. Its `request.generation` is exactly the corresponding tool’s business `request`, without `client_request_id` or `approved_credit`. It does not create a task. A request to estimate only must remain read-only. When the user subsequently asks to generate, submit normally.
 
-Only use optional `approved_credit` when the user explicitly wants a known estimated amount guarded. On `CREDIT_CHANGED`, do not silently replace the guard and retry. The guard is not an atomic upstream quote. `estimated_credit` in a creation receipt is a pre-submission estimate, not an actual settlement record. Do not claim refunds or that a failed terminal task necessarily consumed no credits.
+Only use optional `approved_credit` when the user explicitly wants a known estimated amount guarded. Supplying it makes the server calculate and compare the amount before submission. On `CREDIT_CHANGED`, do not silently replace the guard and retry. The guard is not an atomic upstream quote.
+
+A creation receipt may contain `frozen_credit`, the amount frozen by the upstream create request. An absent value means unknown, not zero or free; do not run an estimate to fill it in. Optional `estimated_credit` is only a pre-submission estimate from explicit amount protection or an older task replay. Neither field is a final settlement record. Do not claim refunds or that a failed terminal task necessarily consumed no credits.
 
 On `CREDIT_INSUFFICIENT` or `PLAN_REQUIRED`, explain neutrally that the task is unavailable with the current balance or entitlements, then stop. Do not suggest purchasing, topping up, upgrading or subscribing; do not provide a transaction link, upgrade card or fallback that spends credits automatically. Existing paid users may use their included entitlements normally.
 

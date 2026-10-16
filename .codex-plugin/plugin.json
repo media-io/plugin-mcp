@@ -38,8 +38,8 @@
       "Show my recent Media.io generations"
     ],
     "brandColor": "#000014",
-    "composerIcon": "./assets/mi-logo-32.svg",
-    "logo": "./assets/mi-logo-256.svg",
+    "composerIcon": "./assets/logo-light.svg",
+    "logo": "./assets/logo-light.svg",
     "supportURL": "https://support.wondershare.com/how-tos/media-io/"
   }
 }
