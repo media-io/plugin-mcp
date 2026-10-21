@@ -94,6 +94,7 @@
             }
           ]
         },
+        "demo_recording_url": "https://www.media.io/videos/ai-agent-plugins/mediaio-mcp-plugin-demo.mp4",
         "commerce": false,
         "commerce_description": "Uses existing Media.io account credits and entitlements for generation. Does not sell digital goods, subscriptions or credits, initiate checkout, or offer purchase or upgrade links."
       }
