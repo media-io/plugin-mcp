@@ -1,6 +1,6 @@
 # Model parameters
 
-Release 2026-10-16-parameter-guidance; environment prod; contract_digest `5f113f916338f43286fbd74ef93c7c1a74a0ae6e3aab4a30bd2a716e7475ab90`; selection_digest `8f8cae7474b4ab11c38258d43a547e8cf63bd424b23619c952c7d89c4c06d0a5`.
+Release 2026-11-10-model-catalog; environment prod; contract_digest `ce9707478ab99797082dad58d61d8f51663fabd1dd294bcf02fed82fbaa51336`; selection_digest `3b37281f94ba50d7f6d356c817c67d1463e9ddabf6822c8102e7039b2211fb7d`.
 
 Generated from the same reviewed workflow/UI evidence as the connected tools. Read the selected request.model section. The connected tool schema is authoritative; these labels do not add inputs or options.
 
@@ -61,7 +61,7 @@ Tool: `image_to_image`. Model: GPT Image 2.5 Sunburst. Status: active.
 
 ## image2image_media_1.0
 
-Tool: `image_to_image`. Model: ToMoviee Lite. Status: active.
+Tool: `image_to_image`. Model: ToMoviee Image Lite. Status: active.
 
 | request.options field | Default | Allowed values / range | UI meaning and label mappings |
 | --- | --- | --- | --- |
@@ -70,7 +70,7 @@ Tool: `image_to_image`. Model: ToMoviee Lite. Status: active.
 
 ## image2image_media_2.0
 
-Tool: `image_to_image`. Model: ToMoviee Pro (ex-Media 2.0). Status: active.
+Tool: `image_to_image`. Model: Tomoviee Image Pro. Status: active.
 
 | request.options field | Default | Allowed values / range | UI meaning and label mappings |
 | --- | --- | --- | --- |
@@ -80,7 +80,7 @@ Tool: `image_to_image`. Model: ToMoviee Pro (ex-Media 2.0). Status: active.
 
 ## image2image_media_3.0
 
-Tool: `image_to_image`. Model: ToMoviee 3.0 Pro. Status: active.
+Tool: `image_to_image`. Model: ToMoviee Image 3.0 Pro. Status: active.
 
 | request.options field | Default | Allowed values / range | UI meaning and label mappings |
 | --- | --- | --- | --- |
@@ -300,7 +300,7 @@ Tool: `text_to_image`. Model: Seedream 5.0 Pro. Status: active.
 
 ## text2image_soul_character
 
-Tool: `text_to_image`. Model: ToMoviee Lite. Status: active.
+Tool: `text_to_image`. Model: ToMoviee Image Lite. Status: active.
 
 | request.options field | Default | Allowed values / range | UI meaning and label mappings |
 | --- | --- | --- | --- |
@@ -309,7 +309,7 @@ Tool: `text_to_image`. Model: ToMoviee Lite. Status: active.
 
 ## text2image_tomoviee_2.0
 
-Tool: `text_to_image`. Model: ToMoviee 2.0. Status: active.
+Tool: `text_to_image`. Model: ToMoviee Image 2.0. Status: active.
 
 | request.options field | Default | Allowed values / range | UI meaning and label mappings |
 | --- | --- | --- | --- |
@@ -534,7 +534,7 @@ Tool: `reference_to_video`. Model: Kling O1. Status: active.
 
 ## image2video_media_1.0
 
-Tool: `image_to_video`. Model: ToMoviee 2.0 Pro (ex-Media 1.0). Status: active.
+Tool: `image_to_video`. Model: ToMoviee Video 2.0 Pro. Status: active.
 
 | request.options field | Default | Allowed values / range | UI meaning and label mappings |
 | --- | --- | --- | --- |
@@ -707,7 +707,7 @@ Tool: `reference_to_video`. Model: Seedance 2.5. Status: active.
 
 ## image2video_tomoviee4_head_and_tail_switch
 
-Tool: `image_to_video`. Model: ToMoviee 4.0. Status: active.
+Tool: `image_to_video`. Model: ToMoviee Video 4.0. Status: active.
 
 | request.options field | Default | Allowed values / range | UI meaning and label mappings |
 | --- | --- | --- | --- |
@@ -717,7 +717,7 @@ Tool: `image_to_video`. Model: ToMoviee 4.0. Status: active.
 
 ## image2video_tomoviee4_reference_image_switch
 
-Tool: `reference_to_video`. Model: ToMoviee 4.0. Status: active.
+Tool: `reference_to_video`. Model: ToMoviee Video 4.0. Status: active.
 
 | request.options field | Default | Allowed values / range | UI meaning and label mappings |
 | --- | --- | --- | --- |
@@ -727,7 +727,7 @@ Tool: `reference_to_video`. Model: ToMoviee 4.0. Status: active.
 
 ## image2video_tomoviee4_switch
 
-Tool: `image_to_video`. Model: ToMoviee 4.0. Status: active.
+Tool: `image_to_video`. Model: ToMoviee Video 4.0. Status: active.
 
 | request.options field | Default | Allowed values / range | UI meaning and label mappings |
 | --- | --- | --- | --- |
@@ -737,7 +737,7 @@ Tool: `image_to_video`. Model: ToMoviee 4.0. Status: active.
 
 ## image2video_tomoviee_2.0
 
-Tool: `image_to_video`. Model: ToMoviee 2.0. Status: active.
+Tool: `image_to_video`. Model: ToMoviee Video 2.0. Status: active.
 
 | request.options field | Default | Allowed values / range | UI meaning and label mappings |
 | --- | --- | --- | --- |
@@ -747,7 +747,7 @@ Tool: `image_to_video`. Model: ToMoviee 2.0. Status: active.
 
 ## image2video_tomoviee_2.0_fast
 
-Tool: `image_to_video`. Model: ToMoviee 2.0 Fast. Status: active.
+Tool: `image_to_video`. Model: ToMoviee Video 2.0 Fast. Status: active.
 
 | request.options field | Default | Allowed values / range | UI meaning and label mappings |
 | --- | --- | --- | --- |
@@ -785,7 +785,7 @@ Tool: `reference_to_video`. Model: Seedance 2.0. Status: active.
 
 ## image2video_tomoviee_3.0
 
-Tool: `image_to_video`. Model: ToMoviee 3.0. Status: active.
+Tool: `image_to_video`. Model: ToMoviee Video 3.0. Status: active.
 
 | request.options field | Default | Allowed values / range | UI meaning and label mappings |
 | --- | --- | --- | --- |
@@ -1176,7 +1176,7 @@ Tool: `text_to_video`. Model: Seedance 2.0 Fast. Status: active.
 
 ## text2video_tomoviee4_switch
 
-Tool: `text_to_video`. Model: ToMoviee 4.0. Status: active.
+Tool: `text_to_video`. Model: ToMoviee Video 4.0. Status: active.
 
 | request.options field | Default | Allowed values / range | UI meaning and label mappings |
 | --- | --- | --- | --- |
@@ -1186,7 +1186,7 @@ Tool: `text_to_video`. Model: ToMoviee 4.0. Status: active.
 
 ## text2video_tomoviee_2.0
 
-Tool: `text_to_video`. Model: ToMoviee 2.0. Status: active.
+Tool: `text_to_video`. Model: ToMoviee Video 2.0. Status: active.
 
 | request.options field | Default | Allowed values / range | UI meaning and label mappings |
 | --- | --- | --- | --- |
@@ -1322,3 +1322,105 @@ Tool: `text_to_video`. Model: Wan 3.0. Status: active.
 | `resolution` | `"480P"` | `["480P","720P","1080P"]` |  |
 | `ratio` | `"adaptive"` | `["adaptive","16:9","9:16","4:3","3:4","1:1"]` | Auto → "adaptive" |
 | `duration` | `5` | `[5,8,10,15,20,25,30]` | 5s → 5; 8s → 8; 10s → 10; 15s → 15; 20s → 20; 25s → 25; 30s → 30 |
+
+## image2video_kling_4.0
+
+Tool: `image_to_video`. Model: Kling 4.0. Status: active.
+
+| request.options field | Default | Allowed values / range | UI meaning and label mappings |
+| --- | --- | --- | --- |
+| `duration` | `10` | `[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]` |  |
+| `resolution` | `"720p"` | `["720p","1080p"]` | 720P → "720p"; 1080P → "1080p" |
+
+## image2video_kling_4.0_head_and_tail
+
+Tool: `image_to_video`. Model: Kling 4.0. Status: active.
+
+| request.options field | Default | Allowed values / range | UI meaning and label mappings |
+| --- | --- | --- | --- |
+| `duration` | `10` | `[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]` |  |
+| `resolution` | `"720p"` | `["720p","1080p"]` | 720P → "720p"; 1080P → "1080p" |
+
+## image2video_kling_4.0_reference_image
+
+Tool: `reference_to_video`. Model: Kling 4.0. Status: active.
+
+| request.options field | Default | Allowed values / range | UI meaning and label mappings |
+| --- | --- | --- | --- |
+| `duration` | `10` | `[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]` |  |
+| `resolution` | `"720p"` | `["720p","1080p"]` | 720P → "720p"; 1080P → "1080p" |
+| `aspect_ratio` | `"adaptive"` | `["adaptive","9:16","16:9","1:1","21:9"]` | Auto → "adaptive" |
+
+## image2video_tomoviee_3.0_fast
+
+Tool: `image_to_video`. Model: ToMoviee Video 3.0 Fast. Status: active.
+
+| request.options field | Default | Allowed values / range | UI meaning and label mappings |
+| --- | --- | --- | --- |
+| `duration` | `5` | `[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]` |  |
+| `aspect_ratio` | `"auto"` | `["auto","9:16","16:9","1:1","4:3","3:4","21:9"]` | Auto → "auto" |
+| `resolution` | `"480p"` | `["480p","720p","1080p","2k"]` | 480P → "480p"; 720P → "720p"; 1080P → "1080p"; 2K → "2k" |
+
+Coupled option branches (choose one complete branch; other fields retain their own allowed values):
+
+```json
+[{"resolution":["480p"],"duration":[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]},{"resolution":["720p"],"duration":[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]},{"resolution":["1080p"],"duration":[3,4,5,6,7,8,9,10]},{"resolution":["2k"],"duration":[3,4,5]}]
+```
+
+## image2video_tomoviee_3.0_fast_head_and_tail
+
+Tool: `image_to_video`. Model: ToMoviee Video 3.0 Fast. Status: active.
+
+| request.options field | Default | Allowed values / range | UI meaning and label mappings |
+| --- | --- | --- | --- |
+| `duration` | `5` | `[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]` |  |
+| `aspect_ratio` | `"auto"` | `["auto","9:16","16:9","1:1","4:3","3:4","21:9"]` | Auto → "auto" |
+| `resolution` | `"480p"` | `["480p","720p","1080p","2k"]` | 480P → "480p"; 720P → "720p"; 1080P → "1080p"; 2K → "2k" |
+
+Coupled option branches (choose one complete branch; other fields retain their own allowed values):
+
+```json
+[{"resolution":["480p"],"duration":[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]},{"resolution":["720p"],"duration":[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]},{"resolution":["1080p"],"duration":[3,4,5,6,7,8,9,10]},{"resolution":["2k"],"duration":[3,4,5]}]
+```
+
+## image2video_tomoviee_3.0_fast_reference_image
+
+Tool: `reference_to_video`. Model: ToMoviee Video 3.0 Fast. Status: active.
+
+| request.options field | Default | Allowed values / range | UI meaning and label mappings |
+| --- | --- | --- | --- |
+| `duration` | `5` | `[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]` |  |
+| `resolution` | `"480p"` | `["480p","720p","1080p","2k"]` | 480P → "480p"; 720P → "720p"; 1080P → "1080p"; 2K → "2k" |
+| `aspect_ratio` | `"auto"` | `["auto","21:9","16:9","4:3","1:1","3:4","9:16"]` | Auto → "auto" |
+
+Coupled option branches (choose one complete branch; other fields retain their own allowed values):
+
+```json
+[{"resolution":["480p"],"duration":[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]},{"resolution":["720p"],"duration":[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]},{"resolution":["1080p"],"duration":[3,4,5,6,7,8,9,10]},{"resolution":["2k"],"duration":[3,4,5]}]
+```
+
+## text2video_kling_4.0
+
+Tool: `text_to_video`. Model: Kling 4.0. Status: active.
+
+| request.options field | Default | Allowed values / range | UI meaning and label mappings |
+| --- | --- | --- | --- |
+| `ratio` | `"9:16"` | `["9:16","16:9","1:1","21:9"]` | UI meaning: aspect_ratio |
+| `resolution` | `"720p"` | `["720p","1080p"]` | 720P → "720p"; 1080P → "1080p" |
+| `duration` | `10` | `[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]` |  |
+
+## text2video_tomoviee_3.0_fast
+
+Tool: `text_to_video`. Model: ToMoviee Video 3.0 Fast. Status: active.
+
+| request.options field | Default | Allowed values / range | UI meaning and label mappings |
+| --- | --- | --- | --- |
+| `duration` | `5` | `[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]` |  |
+| `resolution` | `"480p"` | `["480p","720p","1080p","2k"]` | 480P → "480p"; 720P → "720p"; 1080P → "1080p"; 2K → "2k" |
+| `aspect_ratio` | `"auto"` | `["auto","9:16","16:9","1:1","4:3","3:4","21:9"]` | Auto → "auto" |
+
+Coupled option branches (choose one complete branch; other fields retain their own allowed values):
+
+```json
+[{"resolution":["480p"],"duration":[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]},{"resolution":["720p"],"duration":[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]},{"resolution":["1080p"],"duration":[3,4,5,6,7,8,9,10]},{"resolution":["2k"],"duration":[3,4,5]}]
+```

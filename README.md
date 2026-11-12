@@ -1,6 +1,6 @@
 # Wondershare Media.io
 
-Use seven static generation operations through `https://mcp.media.io/mcp`: text to image, image to image, text to video, image to video, reference to video, motion control, and image-plus-audio music video. The catalog frozen on 2026-10-15 covers 119 model-operation entries, including the original 115. The actual tool schema defines the accepted parameter ranges. OAuth uses discovery on the existing service; the web submission package prefers CIMD. No local CLI is required.
+Use seven static generation operations through `https://mcp.media.io/mcp`: text to image, image to image, text to video, image to video, reference to video, motion control, and image-plus-audio music video. The 2026-11-10 release covers 127 model-operation entries, including eight new Kling 4.0 and ToMoviee Video 3.0 Fast entries. The existing 119 contracts, including Kling Motion Control, remain available. The actual tool schema defines the accepted parameter ranges. OAuth uses discovery on the existing service; the web submission package prefers CIMD. No local CLI is required.
 
 When the user requests generation and has sufficient credits and entitlements, create the task directly and charge credits normally. Use `estimate_credits` only when the user asks for a quote; it is not a prerequisite. The plugin provides no purchase entry points for credits, subscriptions, or digital goods.
 
@@ -17,7 +17,7 @@ Use `get_account_card` when the user wants to view their account, credits, or me
 | `.app.json` | Retained legacy local App mapping; not referenced by the current manifest or included in the public ZIP |
 | `.agents/plugins/marketplace.json` | Local marketplace |
 | `skills/mediaio-aigc/` | Static orchestration of multiple model tools and the generated model catalog |
-| `chatgpt-app-submission.json` | Apps submission import material: App Info, annotation justifications for 17 tools, and five positive plus three negative expected cases covering all seven operations and model selection. Uploaded separately, excluded from the public ZIP, and not evidence of completed live validation |
+| `../plugin-release/review-materials/chatgpt-app-submission.json` | Apps submission import material: App Info, annotation justifications for 19 tools, and five positive plus three negative expected cases covering all seven operations and model selection. Uploaded separately, excluded from the public ZIP, and not evidence of completed live validation |
 | `package-web.sh` | Builds the public remote MCP ZIP from an explicit file allowlist |
 
 This directory is exported to `media-io/plugin-mcp` as the MCP plugin source root. Source snapshots retain local configuration and maintenance tools. The public review ZIP contains only the portable manifest, remote MCP configuration, Skill, license, and brand assets. The public package excludes App references, hooks, helper scripts, test accounts, and credentials.
@@ -63,4 +63,4 @@ Product: [Media.io](https://www.media.io/ai/home). Privacy: [Privacy](https://ww
 
 Generation requests use `{request: {model, prompt?, inputs?, options?}, client_request_id, approved_credit?}`. Quote requests use `{request: {operation, generation: <same generation request>}}`. Fields are not open dictionaries: they must match the selected model's static schema branch. Each call creates one task. The model list and schemas are compiled offline from sanitized snapshots in the MCP repository and do not automatically expand with the live catalog.
 
-In `media-plugin-mcp`, run `node scripts/generate-model-contracts.mjs --skill-dir ../media-plugin-main/plugin-mcp-main/skills/mediaio-aigc` to synchronize the catalog. Add `--check` to validate generated artifacts. See the [implementation and validation record](../../media-plugin-api/docs/mcp/MCP%E5%A4%9A%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E4%B8%8E%E9%AA%8C%E8%AF%81%E8%AE%B0%E5%BD%95.md) for sources, the intersection of parameter constraints, the 119-entry matrix, and pending live host and billing validation.
+In `media-plugin-mcp`, run `node scripts/generate-model-contracts.mjs --skill-dir ../media-plugin-main/plugin-mcp-main/skills/mediaio-aigc` to synchronize the catalog. Add `--check` to validate generated artifacts. See the [implementation and validation record](../../media-plugin-api/docs/mcp/MCP%E5%A4%9A%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E4%B8%8E%E9%AA%8C%E8%AF%81%E8%AE%B0%E5%BD%95.md) for sources, the intersection of parameter constraints, the historical implementation matrix, and pending live host and billing validation.

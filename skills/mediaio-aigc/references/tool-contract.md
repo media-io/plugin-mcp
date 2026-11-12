@@ -6,7 +6,7 @@ Seven generation tools use a nested `request` containing an exact `model`, model
 
 Credit fields in creation receipts are optional. Refresh cached tool definitions after upgrading from a server that required `estimated_credit`; do not treat its absence as a failed creation or resubmit. Older servers and legacy replays may still return only `estimated_credit`; keep its estimate meaning and never relabel it as frozen credits.
 
-`estimate_credits` accepts `{ "request": { "operation": ..., "generation": { ...business_request } } }`. Its seven action branches reuse all 119 static model branches from the generation tools without submission-control fields. It returns `generation_operation`, `estimated_credit` and optional `balance`. It never submits a task.
+`estimate_credits` accepts `{ "request": { "operation": ..., "generation": { ...business_request } } }`. Its seven action branches reuse all 127 static model branches from the generation tools without submission-control fields. It returns `generation_operation`, `estimated_credit` and optional `balance`. It never submits a task.
 
 | Read tool | Behavior |
 | --- | --- |

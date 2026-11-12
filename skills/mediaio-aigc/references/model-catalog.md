@@ -1,8 +1,8 @@
 # Static multi-model catalog
 
-Release 2026-10-16-parameter-guidance; environment prod; contract_digest `5f113f916338f43286fbd74ef93c7c1a74a0ae6e3aab4a30bd2a716e7475ab90`; selection_digest `8f8cae7474b4ab11c38258d43a547e8cf63bd424b23619c952c7d89c4c06d0a5`.
+Release 2026-11-10-model-catalog; environment prod; contract_digest `ce9707478ab99797082dad58d61d8f51663fabd1dd294bcf02fed82fbaa51336`; selection_digest `3b37281f94ba50d7f6d356c817c67d1463e9ddabf6822c8102e7039b2211fb7d`.
 
-119 model-operation entries. Schemas from the connected server are authoritative. New upstream models do not become callable automatically.
+127 model-operation entries. Schemas from the connected server are authoritative. New upstream models do not become callable automatically.
 
 | Tool | Exact request.model | Display name | Status |
 | --- | --- | --- | --- |
@@ -11,9 +11,9 @@ Release 2026-10-16-parameter-guidance; environment prod; contract_digest `5f113f
 | `image_to_image` | `image2image_gpt_image_2` | GPT Image 2 | active |
 | `image_to_image` | `image2image_gpt_image_2.5` | GPT Image 2.5 Flare | active |
 | `image_to_image` | `image2image_gpt_image_2.5_sunburst` | GPT Image 2.5 Sunburst | active |
-| `image_to_image` | `image2image_media_1.0` | ToMoviee Lite | active |
-| `image_to_image` | `image2image_media_2.0` | ToMoviee Pro (ex-Media 2.0) | active |
-| `image_to_image` | `image2image_media_3.0` | ToMoviee 3.0 Pro | active |
+| `image_to_image` | `image2image_media_1.0` | ToMoviee Image Lite | active |
+| `image_to_image` | `image2image_media_2.0` | Tomoviee Image Pro | active |
+| `image_to_image` | `image2image_media_3.0` | ToMoviee Image 3.0 Pro | active |
 | `image_to_image` | `image2image_nano_banana_2` | Nano Banana 2 | active |
 | `image_to_image` | `image2image_nano_banana_2_1` | Nano Banana 2.1 | active |
 | `image_to_image` | `image2image_nano_banana_2_lite` | Nano Banana 2 Lite | active |
@@ -34,8 +34,8 @@ Release 2026-10-16-parameter-guidance; environment prod; contract_digest `5f113f
 | `text_to_image` | `text2image_seedream_4.0` | Seedream 4.0 | active |
 | `text_to_image` | `text2image_seedream_5.0_lite` | Seedream 5.0 Lite | active |
 | `text_to_image` | `text2image_seedream_5.0_pro` | Seedream 5.0 Pro | active |
-| `text_to_image` | `text2image_soul_character` | ToMoviee Lite | active |
-| `text_to_image` | `text2image_tomoviee_2.0` | ToMoviee 2.0 | active |
+| `text_to_image` | `text2image_soul_character` | ToMoviee Image Lite | active |
+| `text_to_image` | `text2image_tomoviee_2.0` | ToMoviee Image 2.0 | active |
 | `text_to_image` | `text2image_tomoviee_4.0` | ToMoviee Image 4.0 | active |
 | `text_to_image` | `text2image_wan_2.7` | Wan 2.7 | active |
 | `text_to_image` | `text2image_wan_2.7_pro` | Wan 2.7 Pro | active |
@@ -56,7 +56,7 @@ Release 2026-10-16-parameter-guidance; environment prod; contract_digest `5f113f
 | `image_to_video` | `image2video_kling_o1` | Kling O1 | active |
 | `image_to_video` | `image2video_kling_o1_head_and_tail` | Kling O1 | active |
 | `reference_to_video` | `image2video_kling_o1_reference_image` | Kling O1 | active |
-| `image_to_video` | `image2video_media_1.0` | ToMoviee 2.0 Pro (ex-Media 1.0) | active |
+| `image_to_video` | `image2video_media_1.0` | ToMoviee Video 2.0 Pro | active |
 | `image_to_video` | `image2video_minimax_02` | Hailuo 02 | active |
 | `image_to_video` | `image2video_minimax_2.3` | Hailuo 2.3 | active |
 | `image_to_video` | `image2video_minimax_h3_head_and_tail_switch` | MiniMax H3 | active |
@@ -72,15 +72,15 @@ Release 2026-10-16-parameter-guidance; environment prod; contract_digest `5f113f
 | `reference_to_video` | `image2video_seedance2.0_fast_reference_image` | Seedance 2.0 Fast | active |
 | `reference_to_video` | `image2video_seedance_2.0_mini_reference_image` | Seedance 2.0 Mini | active |
 | `reference_to_video` | `image2video_seedance_2.5_reference_image` | Seedance 2.5 | active |
-| `image_to_video` | `image2video_tomoviee4_head_and_tail_switch` | ToMoviee 4.0 | active |
-| `reference_to_video` | `image2video_tomoviee4_reference_image_switch` | ToMoviee 4.0 | active |
-| `image_to_video` | `image2video_tomoviee4_switch` | ToMoviee 4.0 | active |
-| `image_to_video` | `image2video_tomoviee_2.0` | ToMoviee 2.0 | active |
-| `image_to_video` | `image2video_tomoviee_2.0_fast` | ToMoviee 2.0 Fast | active |
+| `image_to_video` | `image2video_tomoviee4_head_and_tail_switch` | ToMoviee Video 4.0 | active |
+| `reference_to_video` | `image2video_tomoviee4_reference_image_switch` | ToMoviee Video 4.0 | active |
+| `image_to_video` | `image2video_tomoviee4_switch` | ToMoviee Video 4.0 | active |
+| `image_to_video` | `image2video_tomoviee_2.0` | ToMoviee Video 2.0 | active |
+| `image_to_video` | `image2video_tomoviee_2.0_fast` | ToMoviee Video 2.0 Fast | active |
 | `image_to_video` | `image2video_tomoviee_2.5` | Seedance 2.0 | active |
 | `image_to_video` | `image2video_tomoviee_2.5_head_and_tail` | Seedance 2.0 | active |
 | `reference_to_video` | `image2video_tomoviee_2.5_reference_image` | Seedance 2.0 | active |
-| `image_to_video` | `image2video_tomoviee_3.0` | ToMoviee 3.0 | active |
+| `image_to_video` | `image2video_tomoviee_3.0` | ToMoviee Video 3.0 | active |
 | `image_audio_to_video` | `image2video_tomusic_1_0` | ToMusic 1.0 | active |
 | `image_to_video` | `image2video_veo_3.1` | Google Veo 3.1 | active |
 | `image_to_video` | `image2video_veo_3.1_fast` | Google Veo 3.1 Fast | active |
@@ -114,8 +114,8 @@ Release 2026-10-16-parameter-guidance; environment prod; contract_digest `5f113f
 | `text_to_video` | `text2video_seedance_2.0_mini` | Seedance 2.0 Mini | active |
 | `text_to_video` | `text2video_seedance_2.5` | Seedance 2.5 | active |
 | `text_to_video` | `text2video_seedance2.0_fast` | Seedance 2.0 Fast | active |
-| `text_to_video` | `text2video_tomoviee4_switch` | ToMoviee 4.0 | active |
-| `text_to_video` | `text2video_tomoviee_2.0` | ToMoviee 2.0 | active |
+| `text_to_video` | `text2video_tomoviee4_switch` | ToMoviee Video 4.0 | active |
+| `text_to_video` | `text2video_tomoviee_2.0` | ToMoviee Video 2.0 | active |
 | `text_to_video` | `text2video_tomoviee_2.5` | Seedance 2.0 | active |
 | `text_to_video` | `text2video_veo_3.1` | Google Veo 3.1 | active |
 | `text_to_video` | `text2video_veo_3.1_fast` | Google Veo 3.1 Fast | active |
@@ -125,6 +125,14 @@ Release 2026-10-16-parameter-guidance; environment prod; contract_digest `5f113f
 | `text_to_video` | `text2video_wan_2.5` | Wan 2.5 | active |
 | `text_to_video` | `text2video_wan_2.6` | Wan 2.6 | active |
 | `text_to_video` | `text2video_wan_3.0` | Wan 3.0 | active |
+| `image_to_video` | `image2video_kling_4.0` | Kling 4.0 | active |
+| `image_to_video` | `image2video_kling_4.0_head_and_tail` | Kling 4.0 | active |
+| `reference_to_video` | `image2video_kling_4.0_reference_image` | Kling 4.0 | active |
+| `image_to_video` | `image2video_tomoviee_3.0_fast` | ToMoviee Video 3.0 Fast | active |
+| `image_to_video` | `image2video_tomoviee_3.0_fast_head_and_tail` | ToMoviee Video 3.0 Fast | active |
+| `reference_to_video` | `image2video_tomoviee_3.0_fast_reference_image` | ToMoviee Video 3.0 Fast | active |
+| `text_to_video` | `text2video_kling_4.0` | Kling 4.0 | active |
+| `text_to_video` | `text2video_tomoviee_3.0_fast` | ToMoviee Video 3.0 Fast | active |
 
 Use only model-specific request.inputs and request.options from the connected tools. Never copy options between models, automatically switch models, or resubmit after RESULT_UNKNOWN. Prices and entitlements come from the server.
 

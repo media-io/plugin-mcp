@@ -1,6 +1,6 @@
 # Model selection
 
-Release 2026-10-16-parameter-guidance; environment prod; contract_digest `5f113f916338f43286fbd74ef93c7c1a74a0ae6e3aab4a30bd2a716e7475ab90`; selection_digest `8f8cae7474b4ab11c38258d43a547e8cf63bd424b23619c952c7d89c4c06d0a5`.
+Release 2026-11-10-model-catalog; environment prod; contract_digest `ce9707478ab99797082dad58d61d8f51663fabd1dd294bcf02fed82fbaa51336`; selection_digest `3b37281f94ba50d7f6d356c817c67d1463e9ddabf6822c8102e7039b2211fb7d`.
 
 Use these defaults only when the user has not selected a model. An explicit selection never authorizes automatic substitution. Read the connected tool schema for all settings.
 
@@ -132,5 +132,24 @@ Use these defaults only when the user has not selected a model. An explicit sele
 | Wan 2.5 | `text_to_video` | `text2video_wan_2.5` |
 | Wan 2.6 | `text_to_video` | `text2video_wan_2.6` |
 | Wan 3.0 | `text_to_video` | `text2video_wan_3.0` |
+| ToMoviee Image Lite | `image_to_image` | `image2image_media_1.0` |
+| Tomoviee Image Pro | `image_to_image` | `image2image_media_2.0` |
+| ToMoviee Image 3.0 Pro | `image_to_image` | `image2image_media_3.0` |
+| Kling 4.0 | `image_to_video` | `image2video_kling_4.0`, `image2video_kling_4.0_head_and_tail` |
+| Kling 4.0 | `reference_to_video` | `image2video_kling_4.0_reference_image` |
+| ToMoviee Video 2.0 Pro | `image_to_video` | `image2video_media_1.0` |
+| ToMoviee Video 2.0 | `image_to_video` | `image2video_tomoviee_2.0` |
+| ToMoviee Video 2.0 Fast | `image_to_video` | `image2video_tomoviee_2.0_fast` |
+| ToMoviee Video 3.0 | `image_to_video` | `image2video_tomoviee_3.0` |
+| ToMoviee Video 3.0 Fast | `image_to_video` | `image2video_tomoviee_3.0_fast`, `image2video_tomoviee_3.0_fast_head_and_tail` |
+| ToMoviee Video 3.0 Fast | `reference_to_video` | `image2video_tomoviee_3.0_fast_reference_image` |
+| ToMoviee Video 4.0 | `image_to_video` | `image2video_tomoviee4_head_and_tail_switch`, `image2video_tomoviee4_switch` |
+| ToMoviee Video 4.0 | `reference_to_video` | `image2video_tomoviee4_reference_image_switch` |
+| ToMoviee Image Lite | `text_to_image` | `text2image_soul_character` |
+| ToMoviee Image 2.0 | `text_to_image` | `text2image_tomoviee_2.0` |
+| Kling 4.0 | `text_to_video` | `text2video_kling_4.0` |
+| ToMoviee Video 2.0 | `text_to_video` | `text2video_tomoviee_2.0` |
+| ToMoviee Video 3.0 Fast | `text_to_video` | `text2video_tomoviee_3.0_fast` |
+| ToMoviee Video 4.0 | `text_to_video` | `text2video_tomoviee4_switch` |
 
 Ambiguous aliases require clarification when variants materially differ. Deprecated models remain callable during their declared compatibility window, but are never defaults or recommendations. Replacement candidates are informational; changing models requires the user’s request. Disabled and candidate models are unavailable. Historical task IDs remain queryable with get_generation and get_generation_card; never recreate a task to recover a receipt.
