@@ -1,4 +1,6 @@
-# Wondershare Media.io
+# Media.io
+
+The plugin is displayed as **Media.io** by **Wondershare**. The first two Try now prompts create a cinematic sorceress portrait and a zombie outbreak video ending on a cliffhanger; the third displays recent Media.io generations.
 
 Use seven static generation operations through `https://mcp.media.io/mcp`: text to image, image to image, text to video, image to video, reference to video, motion control, and image-plus-audio music video. The 2026-11-10 release covers 127 model-operation entries, including eight new Kling 4.0 and ToMoviee Video 3.0 Fast entries. The existing 119 contracts, including Kling Motion Control, remain available. The actual tool schema defines the accepted parameter ranges. OAuth uses discovery on the existing service; the web submission package prefers CIMD. No local CLI is required.
 
@@ -24,7 +26,7 @@ This directory is exported to `media-io/plugin-mcp` as the MCP plugin source roo
 
 The `mcp.json` and `.mcp.json` files used for Codex installation declare only the remote server's `type` and `url`. Some Codex versions reject `extensions` in server entries with `unknown field extensions` and skip the MCP server. OAuth registration support and the `mediaio:basic` scope are discovered through the server's `401 WWW-Authenticate` challenge and well-known metadata. Omitting the local auth declaration does not enable anonymous access. `package-web.sh` adds `extensions.com.openai.auth` with `client.mode: "cimd"` only to the temporary `mcp.json` included in the web submission ZIP, without rewriting the source configuration. This prefers CIMD and does not disable the platform's DCR fallback. Do not set a `clientId` or client credentials for this registration mode.
 
-Users with the old configuration should update the plugin, reload Codex, then connect Wondershare Media.io in MCP settings and complete OAuth authorization. Configuration parsing and account authorization are separate steps.
+Users with the old configuration should update the plugin, reload Codex, then connect Media.io in MCP settings and complete OAuth authorization. Configuration parsing and account authorization are separate steps.
 
 ## Validation and packaging
 
@@ -41,7 +43,7 @@ When updating an existing plugin in the OpenAI portal, pass its exact stable `na
 bash plugin-mcp-main/package-web.sh - YOUR_EXISTING_PLUGIN_NAME
 ```
 
-Only the staged ZIP's `plugin.json.name` is changed. The source manifests keep their installation identity, and `Wondershare Media.io` remains the display name. Omitting the second argument uses the source manifest name for a new plugin. Use the name reported by the portal for each existing target; the dashboard APP ID, OAuth client ID, folder name and ZIP filename do not determine the package name. After uploading the CIMD package, inspect the saved registration settings under MCPs and reconnect. An existing client registration can lock configuration changes, so an upload alone does not prove the saved connection changed.
+Only the staged ZIP's `plugin.json.name` is changed. The source manifests keep their installation identity, and `Media.io` remains the display name. Omitting the second argument uses the source manifest name for a new plugin. Use the name reported by the portal for each existing target; the dashboard APP ID, OAuth client ID, folder name and ZIP filename do not determine the package name. After uploading the CIMD package, inspect the saved registration settings under MCPs and reconnect. An existing client registration can lock configuration changes, so an upload alone does not prove the saved connection changed.
 
 Each official review bundle is saved as a single `../plugin-release/openai-pkg/yyyyMMdd-vX.Y.Z-NNN-wondershare-mediaio-openai-review.zip`, relative to this plugin directory. It directly contains `mediaio-plugin-mcp-openai-review.zip`, `chatgpt-app-submission.json`, supporting notes, `openai-review-materials/` and a README. Extract the archive and upload only `mediaio-plugin-mcp-openai-review.zip` to the portal's plugin ZIP field. No expanded archive directory or second materials archive is retained. The date uses Asia/Shanghai, the version comes from `plugin.json`, and the sequence starts at 001 for each date and version. Existing archive numbers, legacy ZIP numbers and legacy directories are preserved. Omit the first argument or use `-` for automatic numbering; use an explicit plugin ZIP output path only for temporary checks or tests.
 

@@ -4,7 +4,7 @@
   "version": "1.0.1",
   "description": "Create images and videos with selectable models through seven static actions on the hosted Media.io MCP server.",
   "author": {
-    "name": "Media.io",
+    "name": "Wondershare",
     "email": "mi_dev@300624.cn",
     "url": "https://www.media.io"
   },
@@ -20,10 +20,10 @@
   "extensions": {
     "com.openai": {
       "interface": {
-        "displayName": "Wondershare Media.io",
+        "displayName": "Media.io",
         "shortDescription": "Create images and videos",
         "longDescription": "Create images and videos with model selection across a static catalog of 127 model-operation entries. Generate from text, images or declared mixed references, transfer motion from a video, or create a music video from an image and audio. Reuse private Media.io drive files, view paginated history cards, monitor tasks and display finished media. Check existing credits and estimate costs when requested. Generation consumes existing account credits and entitlements; models and options are limited to the current tool schemas.",
-        "developerName": "Media.io",
+        "developerName": "Wondershare",
         "category": "Creativity",
         "capabilities": [
           "Read",
@@ -33,9 +33,9 @@
         "privacyPolicyURL": "https://www.media.io/privacy.html",
         "termsOfServiceURL": "https://www.media.io/terms-of-service.html",
         "defaultPrompt": [
-          "Create an image in Wondershare Media.io",
-          "Animate this image in Wondershare Media.io",
-          "Show my recent Wondershare Media.io generations"
+          "Create a cinematic portrait of an original platinum-blonde sorceress at a gothic academy, with a sly, aristocratic smirk.",
+          "Create a cinematic zombie outbreak scene: a survivor races through an abandoned subway as alarms flash, then hears footsteps behind a locked door. End on a cliffhanger.",
+          "Show my recent Media.io generations"
         ],
         "brandColor": "#000014",
         "composerIcon": "./assets/logo-light.svg",
