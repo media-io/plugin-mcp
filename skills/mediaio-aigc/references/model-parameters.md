@@ -1,6 +1,6 @@
 # Model parameters
 
-Release 2026-11-10-model-catalog; environment prod; contract_digest `ce9707478ab99797082dad58d61d8f51663fabd1dd294bcf02fed82fbaa51336`; selection_digest `3b37281f94ba50d7f6d356c817c67d1463e9ddabf6822c8102e7039b2211fb7d`.
+Release 2026-11-13-model-selection; environment prod; contract_digest `ce9707478ab99797082dad58d61d8f51663fabd1dd294bcf02fed82fbaa51336`; selection_digest `d61b99537c159daa11ffa009f5f818d2866b50fe78b388648f15c7bb170fcc5e`.
 
 Generated from the same reviewed workflow/UI evidence as the connected tools. Read the selected request.model section. The connected tool schema is authoritative; these labels do not add inputs or options.
 

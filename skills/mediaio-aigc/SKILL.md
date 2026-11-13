@@ -9,7 +9,8 @@ description: |
   from the static release catalog and follow its model-specific schema.
   Generation normally consumes existing account credits; submit quietly when
   the user requests generation. Use estimate_credits only when the user asks
-  about cost or requests an estimate, never as a routine prerequisite.
+  about cost, requests an estimate, or explicitly requires free, zero-credit
+  or budget-limited generation; never as a routine prerequisite.
   Source media must be file IDs from the user's Media.io drive. Upload local
   files only when the host can read bytes, compute SHA-1 and perform HTTP PUT.
   Wait with get_generation, then show finished results once with
@@ -35,7 +36,7 @@ Use the connected tools and their static input schemas as the contract. If unava
 
 Read [model-catalog.md](references/model-catalog.md) for this release's callable models and lifecycle status. Match the user's selected model to an exact ID within the requested action. Repeated display names are not unique IDs: ask for clarification when the available variants materially differ. Never infer a workflow code or transfer options from another model.
 
-When the user does not specify a model, read [model-selection.md](references/model-selection.md) for generated defaults, scenario rules and aliases. Follow only actions exposed by the connected server. Deprecated models are not defaults or recommendations; replacement candidates do not authorize substitution. Never switch away from an explicitly selected model without the user's request.
+Read [model-selection.md](references/model-selection.md) at model selection for the shared policy, scenario rules, conditional member defaults, free recommendations and aliases. Honor the user's explicit model and cost constraints together, then task features, membership conditions and ordinary defaults. Resolve conflicting requirements before creation. Use the existing read-only `get_account` only when membership is needed for selection; account cards remain user-requested. Follow only actions exposed by the connected server. Deprecated models are not defaults or recommendations; replacement candidates do not authorize substitution. Never switch away from an explicitly selected model without the user's request.
 
 Video editing or extension as a separate operation, persistent character creation, training and publishing are outside this release. A temporarily unavailable model does not authorize discovery or bypassing the declared contract. New upstream models do not become callable automatically.
 
@@ -43,7 +44,7 @@ Video editing or extension as a separate operation, persistent character creatio
 
 1. Select the operation and exact model. Read that model's section in the generated [model parameters](references/model-parameters.md), including UI label mappings, defaults and coupled option branches. Put business fields inside `request`: `model`, the declared `prompt`, model-specific `inputs`, and strict `options`. Extract explicit settings from the user's message, supplied prompt or screenshot, and referenced earlier request into the model's declared fields. Match each setting to its declared field and mapped value; user settings take precedence over defaults. For sizing, also follow [Output size](references/prompt-engineering.md#output-size). Resolve unsupported or conflicting requirements before creation. One call creates one task, not a Web UI batch.
 2. Resolve source media with `list_assets`. For an earlier task output, use its `asset_id` to look up the corresponding `file_id`. Never invent an ID, use another account's media, or pass a URL/path as a file ID.
-3. Submit with the corresponding generation tool and a stable `client_request_id`, omitting `approved_credit` by default. The user's generation request authorizes the normal use of their existing credits. Do not add an estimate, account card, cost announcement or credit-confirmation turn by default. The server skips pre-submission estimation on this path; batch size or an inferred interest in saving credits does not change it.
+3. Submit with the corresponding generation tool and a stable `client_request_id`, omitting `approved_credit` by default. The user's generation request authorizes the normal use of their existing credits. Do not add an estimate, account card, cost announcement or credit-confirmation turn by default. For an explicit free, zero-credit or budget requirement, follow the selection policy and Cost questions before creation. The server skips pre-submission estimation on the ordinary path; batch size or an inferred interest in saving credits does not change it.
 4. Read `task_id`, call `get_generation`, and continue after `poll_after_ms` until all tasks are terminal. A call may wait 25 seconds. Do not resubmit a running task. For requested sizing, compare available output `width` and `height` with the selected pixel size. Report a mismatch or unavailable dimensions without automatically regenerating.
 5. Call `get_generation_card` once after completion. The card is the result presentation; follow it with at most a short sentence.
 
@@ -59,7 +60,7 @@ Use `list_generations` for background inspection, including matching an uncertai
 
 ## Cost questions
 
-`estimate_credits` takes `{ "request": { "operation": "text_to_image", "generation": { "model": "text2image_gpt_image_2", "prompt": "A red paper crane" } } }`. Its `request.generation` is exactly the corresponding tool’s business `request`, without `client_request_id` or `approved_credit`. It does not create a task. A request to estimate only must remain read-only. When the user subsequently asks to generate, submit normally.
+`estimate_credits` takes `{ "request": { "operation": "text_to_image", "generation": { "model": "text2image_soul_character", "prompt": "A red paper crane" } } }`. Its `request.generation` is exactly the corresponding tool’s business `request`, without `client_request_id` or `approved_credit`. It does not create a task. A request to estimate only must remain read-only. When the user subsequently asks to generate, preserve any explicit cost constraint and otherwise submit normally.
 
 Only use optional `approved_credit` when the user explicitly wants a known estimated amount guarded. Supplying it makes the server calculate and compare the amount before submission. On `CREDIT_CHANGED`, do not silently replace the guard and retry. The guard is not an atomic upstream quote.
 
